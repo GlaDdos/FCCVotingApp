@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 class App extends React.Component {
   render(){
     return (
-      <div> Hello from React App component
+      <div> Hello from React App component with Redux 
         <Link to={'/head'}>Header</Link>
       </div>
     );

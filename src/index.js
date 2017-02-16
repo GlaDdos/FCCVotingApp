@@ -1,22 +1,16 @@
+import 'babel-polyfill';
+
 import React from 'react';
-import  ReactDOM  from 'react-dom';
-import App from './components/App';
-import Root from './router/Router';
+import ReactDOM  from 'react-dom';
+import Root from './components/Root';
 
+import configureStore from './store/configureStore';
 
-const render = (Component) => {
-  ReactDOM.render(
-      <Component />,
-    document.getElementById('app')
-  );
-};
+const target = document.getElementById('app');
+const store = configureStore(window.__INITIAL_STATE__);
 
-render(Root);
+const node = (
+  <Root store={store} />
+);
 
-if(module.hot){
-  console.log('module hot');
-  module.hot.accept('./router/Router', () => {
-    const Root = require('./router/Router').default;
-    render(Root)
-  });
-}
+ReactDOM.render(node, target);

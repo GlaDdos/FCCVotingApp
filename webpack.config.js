@@ -4,7 +4,7 @@ const { resolve } = require('path');
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://localhost:3001',
     'webpack/hot/dev-server',
     './src/index.js'
   ],

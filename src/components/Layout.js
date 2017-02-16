@@ -6,8 +6,8 @@ class Layout extends React.Component {
       <div>Layout
         {this.props.children}
       </div>
-    )
+    );
   }
-};
+}
 
 export default Layout;

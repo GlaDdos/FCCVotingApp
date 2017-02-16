@@ -9,7 +9,7 @@ class Header extends React.Component {
           <div className="navbar-header">
             <a className="navbar-brand" href="#">Header</a>
           </div>
-          <button type="button" className="btn btn-primary navbar-btn navbar-right">Sign in</button>
+          <button type="button" className="btn btn-primary navbar-btn navbar-right">Sign in or not</button>
           <Link to={'/'}>App</Link>
         </div>
       </nav>
