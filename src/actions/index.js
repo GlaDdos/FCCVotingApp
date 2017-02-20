@@ -35,25 +35,25 @@ export function logoutUser(){
   };
 }
 
-//action pools public
-export function poolsDataRequest(){
+//action polls public
+export function pollsDataRequest(){
   return {
-    type: actionTypes.POOLS_DATA_REQUEST
+    type: actionTypes.POLLS_DATA_REQUEST
   };
 }
 
-export function poolsDataSuccess(data){
+export function pollsDataSuccess(data){
   return {
-    type: actionTypes.POOLS_DATA_SUCCESS,
+    type: actionTypes.POLLS_DATA_SUCCESS,
     payload: {
       data:data
     }
   };
 }
 
-export function poolsDataFailture(error){
+export function pollsDataFailture(error){
   return {
-    type: actionTypes.POOLS_DATA_FAILTURE,
+    type: actionTypes.POLLS_DATA_FAILTURE,
     payload: {
       stats: error.response.status,
       statusText: error.response.statusText
@@ -62,24 +62,24 @@ export function poolsDataFailture(error){
 }
 
 //actions user data
-export function userPoolsDataRequest(){
+export function userPollsDataRequest(){
   return {
-    type: actionTypes.USER_POOLS_DATA_REQUEST
+    type: actionTypes.USER_POLLS_DATA_REQUEST
   };
 }
 
-export function userPoolsDataSuccess(data){
+export function userPollsDataSuccess(data){
   return {
-    type: actionTypes.USER_POOLS_DATA_SUCCESS,
+    type: actionTypes.USER_POLLS_DATA_SUCCESS,
     payload: {
       data: data
     }
   };
 }
 
-export function userPoolsDataFailture(error){
+export function userPollsDataFailture(error){
   return {
-    type: actionTypes.USER_POOLS_DATA_FAILTURE,
+    type: actionTypes.USER_POLLS_DATA_FAILTURE,
     payload: {
       status: error.response.status,
       statusText: error.response.statusText
@@ -87,25 +87,25 @@ export function userPoolsDataFailture(error){
   };
 }
 
-//user owned pools update
-export function userPoolUpdateRequest(){
+//user owned polls update
+export function userPollUpdateRequest(){
   return {
-    type: actionTypes.USER_POOL_UPDATE_REQUEST
+    type: actionTypes.USER_POLL_UPDATE_REQUEST
   };
 }
 
-export function userPoolUpdateSuccess(data){
+export function userPollUpdateSuccess(data){
   return {
-    type: actionTypes.USER_POOL_UPDATE_SUCCESS,
+    type: actionTypes.USER_POLL_UPDATE_SUCCESS,
     payload: {
       data: data
     }
   };
 }
 
-export function userPoolUpdateFailture(error){
+export function userPollUpdateFailture(error){
   return {
-    type: actionTypes.USER_POOL_UPDATE_FAILTURE,
+    type: actionTypes.USER_POLL_UPDATE_FAILTURE,
     payload: {
       status: error.response.status,
       statusText: error.response.statusText

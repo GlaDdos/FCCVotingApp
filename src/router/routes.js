@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from '../components/App';
-import Header from '../components/Header';
+import Header from '../components/HeaderPage/HeaderLogged';
 import Layout from '../components/Layout';
 
 export default (
