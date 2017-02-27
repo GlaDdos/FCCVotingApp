@@ -71,6 +71,7 @@ body {
 
 .panel-info > .panel-heading{
   background-color: #65a8da;
+  color: white;
 }
 
 span.icon {

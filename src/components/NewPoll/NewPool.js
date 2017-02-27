@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { createPoll } from '../../actions/userPolls';
 
-class NewPoll extends React.Component {
+export class NewPoll extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
+      user: 'Kamil',
       options: [],
       title: ''
     };
@@ -18,13 +21,13 @@ class NewPoll extends React.Component {
   }
 
   addOption(){
-    this.state.options.push('');
+    this.state.options.push({name: ''});
     this.setState({options: this.state.options});
   }
 
   handleOptionChange(e, index){
     const options = this.state.options;
-    options[index] = e.target.value;
+    options[index].name = e.target.value;
     this.setState({
       options,
     });
@@ -33,7 +36,6 @@ class NewPoll extends React.Component {
   removeOption(index){
     this.state.options.splice(index, 1);
     this.setState({options: this.state.options});
-    //TODO: remove refs and add onChange function which update state during typying, delete opstion function should take index argument and delete item from state
   }
 
   render(){
@@ -61,25 +63,25 @@ class NewPoll extends React.Component {
                     type="text"
                     key={index}
                     className="input-option"
-                    value={this.state.options[index]}
+                    value={this.state.options[index].name}
                     onChange={event => this.handleOptionChange(event, index)}
                   />
-                  <span className="glyphicon glyphicon-remove-circle icon" aria-label="remove option" onClick={() => (this.removeOption(index))}></span>
+                  <span className="glyphicon glyphicon-minus icon" aria-label="remove option" onClick={() => (this.removeOption(index))} />
                 </div>
               ))
             }
           </div>
 
           <div className="centered">
-            <button type="submit" action="" className="btn-add-option" onClick={this.addOption.bind(this)}><span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Add an option</button>
+            <button type="submit" action="" className="btn-add-option" onClick={this.addOption.bind(this)}><span className="glyphicon glyphicon-plus" aria-hidden="true" /> Add an option</button>
           </div>
 
           <div className="form-group">
             <div className="text-right">
               {
-                //TODO: action to save data
+                //TODO: payload should contain a user id (todo after authentication)
               }
-              <button type="submit" action="" className="btn btn-default" onClick={''}>Save</button>
+              <button type="submit" action="" className="btn btn-default" onClick={() => this.props.createPoll(this.state)}>Save</button>
               {
                 //TODO: redirect to poolView?
               }
@@ -92,4 +94,16 @@ class NewPoll extends React.Component {
   }
 }
 
-export default NewPoll;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPoll: (data) => dispatch(createPoll(data))
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isFetching: state.userPolls.isFetching
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPoll);

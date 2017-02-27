@@ -1,17 +1,20 @@
 'use strict';
 
+import {addPoll, getPolls} from '../controllers/pollController';
+
 const path = process.cwd();
 
+
 export default function (app) {
-  app.route('/api/pools')
+  app.route('/api/polls')
     .get((req, res) => {
-      res.json({confirmation: 'success', resource: 'get pools' });
+      getPolls(req, res);
     })
     .post((req, res) => {
-      res.json({confirmation: 'succes', resource: 'post pools'});
+      addPoll(req, res);
     });
 
-  app.route('/api/pools/:id')
+  app.route('/api/polls/:id')
     .get((req, res) => {
       res.json({confirmation: 'success', resource: 'get resource with id'});
     })
@@ -22,7 +25,10 @@ export default function (app) {
       res.json({confirmation: 'succes', resource: 'delete pool confirmation login'});
     });
 
-  app.route('/api/pools/:id/:voteId')
+  app.route('/api/polls/:id/:voteId')
+    .get((req, res) => {
+      res.json({id: req.params.id, voteId: req.params.voteId})
+    })
     .post((req, res) => {
       res.json({confirmation: 'success', resource: 'post vote'});
     });

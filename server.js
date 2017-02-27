@@ -1,6 +1,9 @@
 import webpack from 'webpack';
 import webpackDevServer from 'webpack-dev-server';
+
 import express from 'express';
+import bodyParser from 'body-parser';
+
 import { resolve } from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -25,11 +28,15 @@ const server = new webpackDevServer(compiler, {
 });
 
 server.listen(3001, 'localhost', (err, result) => {
-  console.log('wtf')
+  console.log('wtf');
 });
 
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 routes(app);
 
 mongoose.connect('mongodb://localhost:27017/votingapp');
