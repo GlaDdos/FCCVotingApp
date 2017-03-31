@@ -1,6 +1,6 @@
 'use strict';
 
-import {addPoll, getPolls} from '../controllers/pollController';
+import {addPoll, getPolls, votePoll} from '../controllers/pollController';
 
 const path = process.cwd();
 
@@ -27,9 +27,9 @@ export default function (app) {
 
   app.route('/api/polls/:id/:voteId')
     .get((req, res) => {
-      res.json({id: req.params.id, voteId: req.params.voteId})
+      res.json({id: req.params.id, voteId: req.params.voteId});
     })
     .post((req, res) => {
-      res.json({confirmation: 'success', resource: 'post vote'});
+      votePoll(req, res);
     });
 }

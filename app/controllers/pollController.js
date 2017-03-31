@@ -19,7 +19,7 @@ export function addPoll(req, res) {
         Poll.find({}, function(err, users) {
           if (err) throw err;
 
-          // object of all the users
+
           console.log(users);
 });
         res.json({ok: true});
@@ -38,8 +38,12 @@ export function getPolls(req, res) {
 }
 
 export function votePoll(req, res) {
-  res.send({id: req.params.id, voteId: req.params.voteId});
-  //TODO: voting part of the api, then fetch req for vote reducer
-
-  // convert to mongoose -> db.polls.update({_id: ObjectId("58b319844aaf5b2daa9aa12c"), 'options._id': ObjectId("58b319844aaf5b2daa9aa12f") }, {$inc: {'options.$.votes': 1}})
+  Poll.update(
+    {_id: req.params.id, 'options._id': req.params.voteId},
+    {$inc: { 'options.$.votes': 1}},
+    (err, poll) => {
+      if(err) { throw err; }
+      res.json(poll);
+    }
+  );
 }

@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { vote } from '../../actions/vote';
+import Chart from '../Chart/Chart';
+
 
 //TODO: if accessing directly from url store is not initialized, should check if store is empty and perform get polls or could be done in layout
 export class Poll extends React.Component {
@@ -8,12 +11,19 @@ export class Poll extends React.Component {
     super(props);
 
     this.state = {
-      selectedOption: 0
-    }
+      selectedOption: 0,
+      poll: {
+        options: []
+      }
+    };
 
     this.getPollData = this.getPollData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
+  }
+
+  componentWillMount(){
+    this.setState({poll: this.getPollData(this.props.params.id)[0]})
   }
 
   getPollData(id){
@@ -30,16 +40,24 @@ export class Poll extends React.Component {
 
   formSubmit(e){
     e.preventDefault();
-    //TODO: form submit vote action
+
+    this.props.vote(this.state.poll._id, this.state.poll.options[this.state.selectedOption]._id);
   }
 
   render(){
-    console.log(this.getPollData(this.props.params.id));
     return(
       <div>
+      <div className="panel panel-info">
+        <div className="panel-heading">
+          <div className="centered">
+            <h4>{this.state.poll.title} by {this.state.poll.owner}</h4>
+          </div>
+        </div>
+      </div>
+
         <form onSubmit={this.formSubmit}>
         {
-          this.getPollData(this.props.params.id)[0].options.map((option, index) => (
+          this.state.poll.options.map((option, index) => (
             <div className="radio" key={index}>
               <label>
                 <input
@@ -56,6 +74,8 @@ export class Poll extends React.Component {
         }
         <button className="btn btn-default" type="submit">Save</button>
         </form>
+
+        <Chart poll={this.state.poll}/>
     </div>
     );
   }
@@ -63,7 +83,7 @@ export class Poll extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    //TODO: voting actions
+    vote: (id, voteId) => dispatch(vote(id, voteId))
   };
 };
 

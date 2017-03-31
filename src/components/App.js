@@ -9,7 +9,7 @@ class App extends React.Component {
       <div> Hello from React App asd component with Redux
         <Link to={'/head'}>Header</Link>
 
-        <div className="container">
+        <div>
           <NewPoll />
           <ListPolls />
         </div>
