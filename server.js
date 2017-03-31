@@ -1,45 +1,40 @@
-import webpack from 'webpack';
-import webpackDevServer from 'webpack-dev-server';
-
 import express from 'express';
 import bodyParser from 'body-parser';
-
+import morgan from 'morgan';
 import { resolve } from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import config from './webpack.config';
 import routes from './app/routes/index';
 
 dotenv.load();
 
-//webpack dev server for bundling and live reloading react
-const compiler = webpack(config);
-const server = new webpackDevServer(compiler, {
-  contentBase: 'src',
-  inline: true,
-  hot: true,
-  historyApiFallback: true,
-  proxy: {
-    "/api": "http://localhost:3000"
-  },
-  stats: "errors-only",
-  publicPath: '/'
-});
-
-server.listen(3001, 'localhost', (err, result) => {
-  console.log('wtf');
-});
-
-
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+const options = {
+  server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+};
 
-routes(app);
-
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/votingapp');
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error: '));
+
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(morgan('dev'));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 app.listen(3000, function (err) {
   if(err){
@@ -51,6 +46,4 @@ app.listen(3000, function (err) {
   }
 });
 
-app.get('/api', function(req, res){
-  res.json({request: 'ok'});
-});
+routes(app);
