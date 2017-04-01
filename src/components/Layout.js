@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Header from './Header/Header';
+import Home from './Home/Home';
 
-class Layout extends React.Component {
+
+class Layout extends Component {
   render (){
     return (
-      <div className="container">Layout 
-        {this.props.children}
+      <div>
+        <Header />
+        <div className="container">
+          <Home />
+          {this.props.children}
+        </div>
       </div>
     );
   }
