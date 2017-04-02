@@ -1,51 +1,40 @@
-'use strict';
+import passport from 'passport';
+import { Strategy, ExtractJwt } from 'passport-jwt';
+import LocalStrategy from 'passport-local';
 
-import GitHubStrategy from 'passport-github';
-import User from '../models/users';
-import configAuth from './auth';
+import User from '../models/user';
 
-export default function (passport) {
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
+const localOptions = { usernameField: 'email'};
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  User.findOne({ email: email }, (err, user) => {
+    if(err) return done(err);
+    if(!user) { return done(null, false, { error: 'Your login details could not be verified. Wrong login or password.'});}
+
+    user.comparePassword(password, (err, isMatch) => {
+      if(err) return done(err);
+      if(!isMatch) { return done(null, false, {error: 'Your login details could not be verified. Wrong email or password'});}
+
+      return done(null, user);
     });
   });
+});
 
-  passport.use( new GitHubStrategy.Strategy({
-    clientID: configAuth.githubAuth.cliendId,
-    clientSecret: configAuth.githubAuth.clientSecret,
-    callbackURL: configAuth.githubAuth.callbackURL
-  }, function( token, refreshToken, profile, done){
-    process.nextTick(function(){
-      User.findOne({ 'github.id': profile.id}, function (err, user) {
-        if(err){
-          return done(err);
-        }
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeader(),
+  secretOrKey: 'super secret'
+};
 
-        if(user){
-          return done(null, user);
-        } else {
-          let newUser = new User();
+const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
+  User.findById(payload._id, (err, user) => {
+    if(err) done(err, false);
+    if(user){
+      done(null, user);
+    } else {
+      done(null, false)
+    }
+  });
+});
 
-          newUser.github.id = profile.id;
-          newUser.github.username = profile.username;
-          newUser.github.displayName = profile.displayName;
-
-          newUser.save( function(err) {
-            if(err){
-              throw err;
-            }
-
-            return done(null, newUser);
-          });
-        }
-      });
-    });
-  }));
-
-
-}
+passport.use(jwtLogin);
+passport.use(localLogin);

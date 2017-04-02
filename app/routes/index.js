@@ -1,9 +1,15 @@
 'use strict';
 
-import {addPoll, getPolls, votePoll} from '../controllers/pollController';
+import { addPoll, getPolls, votePoll } from '../controllers/pollController';
+import { login, register } from '../controllers/authentication';
+import express from 'express';
+import passport from 'passport';
+import '../config/passport';
 
 const path = process.cwd();
 
+const requireAuth = passport.authenticate('jwt', { session: false });
+const requireLogin = passport.authenticate('local', { session: false });
 
 export default function (app) {
   app.route('/api/polls')
@@ -32,4 +38,10 @@ export default function (app) {
     .post((req, res) => {
       votePoll(req, res);
     });
+
+  app.route('/auth/register')
+    .post(register);
+
+  app.route('/auth/login')
+    .post(requireLogin, login);
 }
