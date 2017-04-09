@@ -38,7 +38,7 @@ const register = (req, res, next) => {
     if(err) return next(err);
 
     if(existingUser){
-      return res.status(422).send({ error: 'This email adress is already in use.'});
+      return res.status(422).json({ error: 'This email adress is already in use.'});
     }
 
     let user = new User({
@@ -64,7 +64,7 @@ const login = (req, res, next) => {
 
   res.status(200).json({
     token: 'JWT' + generateToken(userInfo),
-    userInfo: userInfo
+    user: userInfo
   });
 }
 

@@ -3,6 +3,7 @@
 import rootReducer from '../reducers';
 import routes from '../router/routes';
 
+import 'babel-polyfill';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';

@@ -1,5 +1,5 @@
 'use strict';
-
+import fetch from 'isomorphic-fetch';
 import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
@@ -17,18 +17,15 @@ export function loginUserFailture(error){
   return {
     type: LOGIN_USER_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      statusText: error.message
     }
   };
 }
 
-export function loginUserSuccess(token){
+export function loginUserSuccess(payload){
   return {
     type: LOGIN_USER_SUCCESS,
-    payload: {
-      token: token
-    }
+    payload: payload
   };
 }
 
@@ -36,4 +33,51 @@ export function logoutUser(){
   return {
     type: LOGOUT_USER
   };
+}
+
+export function loginUser(user){
+
+  return function (dispatch){
+
+    dispatch(loginUserRequest());
+
+    return fetch('http://localhost:3000/auth/login', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      method: 'POST',
+      body: JSON.stringify(user)
+    })
+    .then( response => {
+      console.log(response)
+      if(!response.ok)
+        throw Error(response.statusText)
+    })
+    .then( response => response.json())
+    .then( json => dispatch(loginUserSuccess(json)))
+    .catch( error => dispatch(loginUserFailture(error)))
+
+  }
+}
+
+export function registerUser(user) {
+  return function(dispatch) {
+    dispatch(loginUserRequest());
+
+    return fetch('http://localhost:3000/auth/register', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      method: 'POST',
+      body: JSON.stringify(user)
+    })
+    .then( response => {
+      if(!response.ok){
+         return response.json().then(json => { throw Error(json.error) })
+      }
+    })
+    .then( response => response.json())
+    .then( json => dispatch(loginUserSuccess(json)))
+    .catch(error => {console.dir(error); dispatch(loginUserFailture(error))})
+  }
 }

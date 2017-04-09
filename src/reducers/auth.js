@@ -4,10 +4,12 @@ import { LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USE
 
 const initialState = {
   token: null,
-  userName: null,
+  firstName: null,
+  lastName: null,
+  email: null,
   isAuthenticated: false,
   isAuthenticating: false,
-  statusText: null
+  errorMessage: null
 };
 
 export default function (state = initialState, action){
@@ -16,7 +18,7 @@ export default function (state = initialState, action){
     case LOGIN_USER_REQUEST:
       return Object.assign({}, state, {
         isAuthenticating: true,
-        statusText: null
+        errorMessage: null
       });
 
     case LOGIN_USER_SUCCESS:
@@ -24,8 +26,10 @@ export default function (state = initialState, action){
         isAuthenticating: false,
         isAuthenticated: true,
         token: action.payload.token,
-        userName: action.payload.token.username,
-        statusText: 'You have successfully logged in.'
+        firstName: action.payload.user.firstName,
+        lastName: action.payload.user.lastName,
+        email: action.payload.user.email,
+        errorMessage: null
       });
 
     case LOGIN_USER_FAILTURE:
@@ -33,16 +37,20 @@ export default function (state = initialState, action){
         isAuthenticated: false,
         isAuthenticating: false,
         token: null,
-        userName: null,
-        statusText: `Authentication Error: ${action.payload.status} ${action.payload.statusText}`
+        firstName: null,
+        lastName: null,
+        email: null,
+        errorMessage: `Authentication Error: ${action.payload.statusText}`
       });
 
     case LOGOUT_USER:
       return Object.assign({}, state, {
         isAuthenticated: false,
         token: null,
-        userName: null,
-        statusText: 'You have been successfully logged out.'
+        firstName: null,
+        lastName: null,
+        email: null,
+        errorMessage: null
       });
 
     default:

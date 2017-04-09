@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/auth';
+
+const form = reduxForm({
+  form: 'signIn'
+});
 
 class SignIn extends Component {
+
+  handleFormSubmit(formProps){
+    this.props.registerUser(formProps);
+  }
+
+  renderAlert(){
+    if(this.props.errorMessage){
+      return(
+        <div>
+          <span><strong>ERROR!</strong>{this.props.errorMessage}</span>
+        </div>
+      )
+    }
+  }
   render(){
+    const { handleSubmit } = this.props;
+
     return(
       <div>
-        <form onSubmit="">
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          {this.renderAlert()}
           <div className="row">
             <div className="col-md-6">
               <label>First name</label>
@@ -31,4 +54,16 @@ class SignIn extends Component {
   }
 }
 
-export default reduxForm({form: 'signin'})(SignIn);
+function mapStateToProps(state){
+  return {
+    errorMessage: state.auth.errorMessage
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registerUser: (user) => { dispatch(registerUser(user))}
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(form(SignIn));

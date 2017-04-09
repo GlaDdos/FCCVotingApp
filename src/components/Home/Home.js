@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 
 export default class Home extends Component {
   render(){
@@ -15,8 +16,8 @@ export default class Home extends Component {
           <div className="text-center">
             <div className="btn-group btn-group-lg">
               <button type="button" className="btn btn-primary">View Polls</button>
-              <button type="button" className="btn btn-primary">Log In</button>
-              <button type="button" className="btn btn-primary">Sign In</button>
+              <Link to="login"><button type="button" className="btn btn-primary">Log In</button></Link>
+              <Link to="signin"><button type="button" className="btn btn-primary">Sign In</button></Link>
             </div>
           </div>
       </div>
