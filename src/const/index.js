@@ -9,6 +9,11 @@ module.exports = {
   //user logout (protected - option only visible for authenticated users)
   LOGOUT_USER:          'LOGOUT_USER',
 
+  //register actions (unproteceted)
+  REGISTER_REQUEST:  'REGISTER_REQUEST',
+  REGISTER_SUCCESS:   'REGISTER_SUCCESS',
+  REGISTER_FAILTURE: 'REGISTER_FAILTURE',
+
   //public pools getter (unprotected)
   POLLS_DATA_REQUEST:   'POLLS_DATA_REQUEST',
   POLLS_DATA_SUCCESS:   'POLLS_DATA_SUCCESS',

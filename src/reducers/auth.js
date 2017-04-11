@@ -1,6 +1,6 @@
 'use strict';
 
-import { LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USER } from '../const/index';
+import { LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USER } from '../const';
 
 const initialState = {
   token: null,
@@ -45,6 +45,7 @@ export default function (state = initialState, action){
 
     case LOGOUT_USER:
       return Object.assign({}, state, {
+        isAuthenticating: false,
         isAuthenticated: false,
         token: null,
         firstName: null,

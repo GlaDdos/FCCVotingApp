@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/auth';
+import { registerUser } from '../../actions/register';
 
 const form = reduxForm({
   form: 'signIn'
@@ -56,7 +56,7 @@ class SignIn extends Component {
 
 function mapStateToProps(state){
   return {
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.register.errorMessage
   };
 }
 
