@@ -24,7 +24,7 @@ const initialState = {
   isRequesting: false,
   isSuccess: false,
   statusText: null,
-  pools: [{
+  polls: [{
     owner: "",
     title: "",
     options: [{
@@ -48,7 +48,7 @@ export default function (state = initialState, action){
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: true,
-        polls: action.payload.polls,
+        polls: action.payload.data,
         statusText: 'Request successfull'
       });
 

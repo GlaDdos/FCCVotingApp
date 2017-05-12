@@ -1,0 +1,82 @@
+body {
+  color: black;
+}
+
+.navbar-right {
+  margin-right: 5px;
+}
+
+.btn-add-option{
+  width: 70%;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-style: dashed;
+  background-color: white;
+  border-color: #d9d9d9;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.4);
+
+  -webkit-transition: color 0.5s, border-color 0.5s;
+}
+
+.btn-add-option:hover{
+  color: #65a8da;
+  border-color: #65a8da;
+}
+
+.btn-add-option:focus{
+  outline: inherit;
+  border-color: #65a8da
+}
+.input-title{
+  width: 70%;
+
+  text-align: center;
+  font-size: 1.2em;
+
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+
+  margin-bottom: 0.5em;
+
+  border-style: solid;;
+  background-color: white;
+  border-color: #d9d9d9;
+  border-radius: 4px;
+
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.input-option {
+  width: 70%;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+
+
+  border-style: solid;;
+  background-color: white;
+  border-color: #d9d9d9;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.centered{
+  text-align: center;
+}
+
+.panel-info > .panel-heading{
+  background-color: #65a8da;
+  color: white;
+}
+
+span.icon {
+  font-size: 1.5em;
+  top: 0.25em;
+  margin-left: 0.3em;
+  color: #fb7171;
+}

@@ -1,4 +1,5 @@
 'use strict';
+
 import fetch from 'isomorphic-fetch';
 import {
   USER_POLLS_DATA_REQUEST,
@@ -97,7 +98,7 @@ export function userPollCreateFailture(error){
 export function createPoll(data){
   return function (dispatch) {
     dispatch(userPollCreateRequest());
-      return fetch('/api/polls', {
+      return fetch('http://localhost:3000/api/polls', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -108,6 +109,21 @@ export function createPoll(data){
       .then( response => response.json())
       .then( json => dispatch(userPollCreateSuccess(json)));
   };
+}
+
+export function userPollsRequest(id){
+  return function(dispatch){
+    dispatch(userPollsDataRequest());
+      return fetch(`http://localhost:3000/api/polls/${id}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'applocation/json'
+        }
+      })
+      .then( response => response.json())
+      .then( json => dispatch(userPollsDataSuccess(json)));
+  }
 }
 
 export function userPollDeleteRequest(){

@@ -47,6 +47,12 @@ export default  class Chart extends React.Component {
           data: data,
           backgroundColor: colors
         }]
+      }, 
+      options: {
+        legend: {
+          display: true,
+          position: 'bottom'
+        }
       }
     });
 

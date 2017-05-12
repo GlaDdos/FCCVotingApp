@@ -35,7 +35,7 @@ export function pollsDataFailture(error){
 export function getPolls(){
   return function (dispatch) {
     dispatch(pollsDataRequest());
-      return fetch('/api/polls', {
+      return fetch('http://localhost:3000/api/polls', {
         method: 'GET'
       })
       .then( response => response.json())

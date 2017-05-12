@@ -37,7 +37,7 @@ export function vote(id, voteId){
     console.log('helou');
     dispatch(voteRequest());
     console.log('/api/polls/' + id +'/' + voteId);
-      return fetch('/api/polls/' + id +'/' + voteId, {
+      return fetch('http://localhost:3000/api/polls/' + id +'/' + voteId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

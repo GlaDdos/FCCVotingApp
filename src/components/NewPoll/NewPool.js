@@ -7,13 +7,18 @@ export class NewPoll extends React.Component {
     super(props);
 
     this.state = {
-      user: 'Kamil',
+      owner: null,
       options: [],
       title: ''
     };
 
     this.handleChange = this.handleTitleChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
+  }
+
+  componentDidMount(){
+    this.setState({ owner: this.props.userId });
+
   }
 
   handleTitleChange(e){
@@ -102,7 +107,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.userPolls.isFetching
+    isFetching: state.userPolls.isFetching,
+    userId: state.auth.userId
   };
 };
 

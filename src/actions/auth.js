@@ -2,6 +2,7 @@
 
 import fetch from 'isomorphic-fetch';
 import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
 import {  LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USER } from '../const';
 
 export function loginUserRequest(){
@@ -54,7 +55,8 @@ return function(dispatch) {
     .then( json => {
       cookie.save('token', json.token, { path: '/' });
       cookie.save('user', json.user, { path: '/' });
-      dispatch(loginUserSuccess(json))
+      dispatch(loginUserSuccess(json));
+      browserHistory.push('/');
     })
     .catch(error => {console.dir(error); dispatch(loginUserFailture(error))})
   }

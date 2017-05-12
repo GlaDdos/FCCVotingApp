@@ -11,13 +11,13 @@ class Header extends React.Component {
       <nav className="navbar navbar-default navbar-static-top">
         <div className="container">
           <div className="navbar-header">
-            <a className="navbar-brand" href="#">FCCVoting</a>
+            <Link to="/"><a className="navbar-brand" href="/">FCCVoting</a></Link>
           </div>
               {
                 authenticated ? (
                   <ul className="nav navbar-nav navbar-right">
-                    <li><a href="#">{`Hello, ${this.props.firstName}!`}</a></li>
-                    <li><a href="#">New Poll</a></li>
+                    <li><a href="/">{`Hello, ${this.props.firstName}!`}</a></li>
+                    <li><Link to="newpoll">New Poll</Link></li>
                     <li><a href='#'>My polls</a></li>
                     <li><a href='#' onClick={this.props.logout}>Log out</a></li>
                   </ul>

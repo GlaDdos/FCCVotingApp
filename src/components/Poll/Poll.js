@@ -46,36 +46,45 @@ export class Poll extends React.Component {
 
   render(){
     return(
-      <div>
-      <div className="panel panel-info">
-        <div className="panel-heading">
-          <div className="centered">
-            <h4>{this.state.poll.title} by {this.state.poll.owner}</h4>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="panel panel-info">
+            <div className="panel-heading">
+              <div className="centered">
+                <h4>{this.state.poll.title} by {this.state.poll.owner.profile.firstName} {this.state.poll.owner.profile.lastName}</h4>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-        <form onSubmit={this.formSubmit}>
-        {
-          this.state.poll.options.map((option, index) => (
-            <div className="radio" key={index}>
-              <label>
-                <input
-                  type="radio"
-                  id={option._id}
-                  value={index}
-                  checked={this.state.selectedOption === index}
-                  onChange={this.handleChange}
-                />
-                {option.name}
-              </label>
-            </div>
-          ))
-        }
-        <button className="btn btn-default" type="submit">Save</button>
-        </form>
+        <div className="row align-items-center">
+          <div className="col-md-6">
+            <form onSubmit={this.formSubmit}>
+              {
+                this.state.poll.options.map((option, index) => (
+                  <div className="radio" key={index}>
+                    <label>
+                      <input
+                        type="radio"
+                        id={option._id}
+                        value={index}
+                        checked={this.state.selectedOption === index}
+                        onChange={this.handleChange}
+                      />
+                      {option.name}
+                    </label>
+                  </div>
+                ))
+              }
+              <button className="btn btn-default" type="submit">Save</button>
+            </form>
+          </div>
+          
+          <div className="col-md-6">
+            <Chart poll={this.state.poll}/>
+          </div>
 
-        <Chart poll={this.state.poll}/>
+        </div>
     </div>
     );
   }

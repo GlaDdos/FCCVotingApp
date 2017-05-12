@@ -2,7 +2,7 @@
 
 import Poll from '../models/poll';
 
-export function addPoll(req, res) {
+export function addPoll(req, res, next) {
 
     const body = req.body;
     console.log(req.body.title);
@@ -27,17 +27,33 @@ export function addPoll(req, res) {
     });
 }
 
-export function getPolls(req, res) {
-  Poll.find({}, function(err, polls) {
-    if(err){
-      throw err;
-    } else {
-      res.json(polls);
-    }
-  });
+export function getPolls(req, res, next) {
+  Poll
+    .find({})
+    .populate('owner', 'profile')
+    .exec(function(err, polls){
+      if(err){
+        throw err;
+      } else {
+        res.json(polls);
+      }
+    });
 }
 
-export function votePoll(req, res) {
+export function getUserPolls(req, res, next) {
+  Poll
+    .find({owner: req.params.id})
+    .populate('owner', 'profile')
+    .exec( function(err, polls) {
+      if(err){
+        throw err;
+      } else {
+        res.json(polls);
+      }
+    });
+}
+
+export function votePoll(req, res, next) {
   Poll.update(
     {_id: req.params.id, 'options._id': req.params.voteId},
     {$inc: { 'options.$.votes': 1}},
@@ -46,4 +62,21 @@ export function votePoll(req, res) {
       res.json(poll);
     }
   );
+}
+
+export function deletePoll(req, res, next) {
+  Poll.
+    findOne({
+      owner: req.body.ownerId, 
+      _id: req.body.pollId //TODO: owner id maybe from token?
+    })
+    .remove()
+    .exec(err => {
+      if(err) {
+        throw err;
+      } else {
+        res.json({status: "ok"})
+      }
+
+    })
 }

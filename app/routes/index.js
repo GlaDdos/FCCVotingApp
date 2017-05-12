@@ -1,6 +1,6 @@
 'use strict';
 
-import { addPoll, getPolls, votePoll } from '../controllers/pollController';
+import { addPoll, getPolls, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
 import { login, register } from '../controllers/authentication';
 import express from 'express';
 import passport from 'passport';
@@ -21,15 +21,11 @@ export default function (app) {
     });
 
   app.route('/api/polls/:id')
-    .get((req, res) => {
-      res.json({confirmation: 'success', resource: 'get resource with id'});
-    })
+    .get(getUserPolls)
     .post((req, res) => {
       res.json({confirmation: 'succes', resource: 'edit pool confirmation login'});
     })
-    .delete((req, res) => {
-      res.json({confirmation: 'succes', resource: 'delete pool confirmation login'});
-    });
+    .delete(deletePoll);
 
   app.route('/api/polls/:id/:voteId')
     .get((req, res) => {
@@ -39,6 +35,11 @@ export default function (app) {
       votePoll(req, res);
     });
 
+  app.route('/auth/require')
+    .get(requireAuth, (req, res) => {
+        res.json({response: 'You are authenticated'})
+    });
+    
   app.route('/auth/register')
     .post(register);
 

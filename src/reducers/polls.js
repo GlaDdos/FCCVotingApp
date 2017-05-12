@@ -9,7 +9,12 @@ const initialState = {
   isSuccess: false,
   statusText: "",
   polls: [{
-    owner: "",
+    owner: {
+      profile: {
+        firstName: '',
+        lastName: ''
+      }
+    },
     titile: "",
     options: [{
       name: "",

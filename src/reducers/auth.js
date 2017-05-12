@@ -29,6 +29,7 @@ export default function (state = initialState, action){
         firstName: action.payload.user.firstName,
         lastName: action.payload.user.lastName,
         email: action.payload.user.email,
+        userId: action.payload.user._id,
         errorMessage: null
       });
 

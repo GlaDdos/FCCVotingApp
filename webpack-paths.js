@@ -5,5 +5,5 @@ const path = require('path');
 module.exports = {
   src: path.join(__dirname, 'src'),
   dist: path.join(__dirname, 'dist'),
-  css: path.join(__dirname, 'src/style/css')
+  css: path.join(__dirname, 'src/styles')
 };

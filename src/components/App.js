@@ -1,18 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
-import NewPoll from './NewPoll/NewPool';
-import ListPolls from './ListPolls/ListPolls';
+
+import Home from './Home/Home';
 
 class App extends React.Component {
   render(){
     return (
-      <div> Hello from React App asd component with Redux
-        <Link to={'/head'}>Header</Link>
-
-        <div>
-          <NewPoll />
-          <ListPolls />
-        </div>
+      <div> 
+        <Home />
       </div>
 
     );

@@ -25,7 +25,7 @@ export class ListPolls extends React.Component {
             </Link>
           ))
         }
-      </div>;
+      </div>
     }else{
       body = <div className="centered"><p>Data is fetching</p></div>;
     }
