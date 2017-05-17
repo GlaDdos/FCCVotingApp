@@ -122,7 +122,28 @@ export function userPollsRequest(id){
         }
       })
       .then( response => response.json())
-      .then( json => dispatch(userPollsDataSuccess(json)));
+      .then( json =>{
+         console.dir(json);
+         dispatch(userPollsDataSuccess(json))});
+  }
+}
+
+export function deletePoll(token, id){
+  return function(dispatch){
+    dispatch(userPollDeleteRequest());
+      return fetch(`http://localhost:3000/api/polls${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
+        },
+        body: {
+          
+        }
+      })
+      .then( response => response.json())
+      .then( json => dipatch(userPollDeleteSucces()));
   }
 }
 

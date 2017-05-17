@@ -19,7 +19,7 @@ class UserPolls extends Component {
     render(){
         return(
             <List 
-                listTitle={"Polls created by ....."}
+                listTitle={`Polls created by ${this.props.firstName} ${this.props.lastName}`}
                 isSuccess={this.props.isSuccess} 
                 polls={this.props.polls}
             />
@@ -38,7 +38,9 @@ const mapStateToProps = (state) => {
         isRequesting: state.userPolls.isRequesting,
         isSuccess: state.userPolls.isSuccess,
         polls: state.userPolls.polls,
-        id: state.auth.userId
+        id: state.auth.userId,
+        firstName: state.auth.firstName,
+        lastName: state.auth.lastName
     };
 }
 

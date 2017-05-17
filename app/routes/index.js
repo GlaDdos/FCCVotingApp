@@ -25,7 +25,7 @@ export default function (app) {
     .post((req, res) => {
       res.json({confirmation: 'succes', resource: 'edit pool confirmation login'});
     })
-    .delete(deletePoll);
+    .delete(requireAuth, deletePoll);
 
   app.route('/api/polls/:id/:voteId')
     .get((req, res) => {

@@ -14,8 +14,8 @@ const List = (props) => {
                     <ListRow index={index} 
                         title={poll.title} 
                         name={poll.owner.profile.firstName} 
-                        time={'1'} 
-                        votes={"1"}
+                        time={new Date(poll.date).toLocaleDateString()} 
+                        votes={poll.votes}
                         id={poll._id}
                     />
                 ))

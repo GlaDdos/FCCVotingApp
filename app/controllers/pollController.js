@@ -64,6 +64,20 @@ export function votePoll(req, res, next) {
   );
 }
 
+export function getPoll(req, res, next){
+  Poll
+    .findOne({
+      _id: req.body.id
+    })
+    .exec((err, poll) => {
+      if(err) {
+        throw err;
+      } else {
+        res.json(poll);
+      }
+    });
+}
+
 export function deletePoll(req, res, next) {
   Poll.
     findOne({

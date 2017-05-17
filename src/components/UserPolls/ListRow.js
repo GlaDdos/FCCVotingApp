@@ -3,12 +3,10 @@ import React from 'react';
 const ListRow = (props) => {
     return(
         <div className="row">
-            <div className="col-md-1">{ props.index }</div>
-            <div className="col-md-4">{ props.title }</div>
-            <div className="col-md-2">{ props.name }</div>
-            <div className="col-md-2">{ props.time }</div>
-            <div className="col-md-2">{ props.votes }</div>
-            <div className="col-md-1">X</div>
+            <div className="col-md-5">{ props.title }</div>
+            <div className="col-md-3 centered">{ props.time }</div>
+            <div className="col-md-3 centered">{ props.votes }</div>
+            <div className="col-md-1 centered"><span className="label label-danger">Delete</span></div>
         </div>
     );
 }
