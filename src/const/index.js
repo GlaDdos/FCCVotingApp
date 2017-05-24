@@ -40,7 +40,12 @@ module.exports = {
   //voting (unprotected)
   VOTE_REQUEST:   'VOTE_REQUEST',
   VOTE_SUCCESS:   'VOTE_SUCCESS',
-  VOTE_FAILTURE:  'VOTE_FAILTURE'
+  VOTE_FAILTURE:  'VOTE_FAILTURE',
+
+  //single poll
+  POLL_DATA_REQUEST: 'POLL_DATA_REQUEST',
+  POLL_DATA_SUCCESS: 'POLL_DATA_SUCCESS',
+  POLL_DATA_FAILTURE: 'POLL_DATA_FAILTURE'
 };
 
 //export default actionTypes;

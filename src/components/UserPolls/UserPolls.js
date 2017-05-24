@@ -37,8 +37,8 @@ const mapStateToProps = (state) => {
     return {
         isRequesting: state.userPolls.isRequesting,
         isSuccess: state.userPolls.isSuccess,
-        polls: state.userPolls.polls,
         id: state.auth.userId,
+        polls: state.userPolls.polls,
         firstName: state.auth.firstName,
         lastName: state.auth.lastName
     };

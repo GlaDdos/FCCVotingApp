@@ -86,7 +86,7 @@ export class NewPoll extends React.Component {
               {
                 //TODO: payload should contain a user id (todo after authentication)
               }
-              <button type="submit" action="" className="btn btn-default" onClick={() => this.props.createPoll(this.state)}>Save</button>
+              <button type="submit" action="" className="btn btn-default" onClick={() => this.props.createPoll(this.props.token, this.state)}>Save</button>
               {
                 //TODO: redirect to poolView?
               }
@@ -101,14 +101,15 @@ export class NewPoll extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPoll: (data) => dispatch(createPoll(data))
+    createPoll: (token, data) => dispatch(createPoll(token, data))
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     isFetching: state.userPolls.isFetching,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    token: state.auth.token
   };
 };
 

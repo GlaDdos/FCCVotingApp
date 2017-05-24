@@ -95,14 +95,15 @@ export function userPollCreateFailture(error){
 }
 
 
-export function createPoll(data){
+export function createPoll(token, data){
   return function (dispatch) {
     dispatch(userPollCreateRequest());
-      return fetch('http://localhost:3000/api/polls', {
+      return fetch('http://localhost:3000/api/poll', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
         },
         body: JSON.stringify(data)
       })
@@ -111,19 +112,18 @@ export function createPoll(data){
   };
 }
 
-export function userPollsRequest(id){
+export function userPollsRequest(userId){
   return function(dispatch){
     dispatch(userPollsDataRequest());
-      return fetch(`http://localhost:3000/api/polls/${id}`, {
+      return fetch(`http://localhost:3000/api/polls/${userId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'applocation/json'
+          'Content-Type': 'application/json'
         }
       })
       .then( response => response.json())
       .then( json =>{
-         console.dir(json);
          dispatch(userPollsDataSuccess(json))});
   }
 }

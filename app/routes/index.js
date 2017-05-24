@@ -1,6 +1,6 @@
 'use strict';
 
-import { addPoll, getPolls, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
+import { addPoll, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
 import { login, register } from '../controllers/authentication';
 import express from 'express';
 import passport from 'passport';
@@ -13,31 +13,25 @@ const requireLogin = passport.authenticate('local', { session: false });
 
 export default function (app) {
   app.route('/api/polls')
-    .get((req, res) => {
-      getPolls(req, res);
-    })
-    .post((req, res) => {
-      addPoll(req, res);
-    });
+    .get(getPolls);
 
-  app.route('/api/polls/:id')
-    .get(getUserPolls)
-    .post((req, res) => {
-      res.json({confirmation: 'succes', resource: 'edit pool confirmation login'});
-    })
-    .delete(requireAuth, deletePoll);
+  app.route('/api/polls/:userId')
+    .get(getUserPolls);
 
-  app.route('/api/polls/:id/:voteId')
-    .get((req, res) => {
-      res.json({id: req.params.id, voteId: req.params.voteId});
-    })
-    .post((req, res) => {
-      votePoll(req, res);
-    });
+  app.route('/api/poll')
+    .post(requireAuth, addPoll);
+
+  app.route('/api/poll/:pollId')
+    .get(getPoll)
+   // .post(requireAuth, addOption)
+    .delete(requireAuth, deletePoll)
+
+  app.route('/api/poll/:pollId/:optionId')
+    .post(votePoll);
 
   app.route('/auth/require')
     .get(requireAuth, (req, res) => {
-        res.json({response: 'You are authenticated'})
+        res.json({response: req.user})
     });
     
   app.route('/auth/register')

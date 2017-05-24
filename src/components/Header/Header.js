@@ -11,7 +11,7 @@ class Header extends React.Component {
       <nav className="navbar navbar-default navbar-static-top">
         <div className="container">
           <div className="navbar-header">
-            <Link to="/"><span className="navbar-brand" href="/">FCCVoting</span></Link>
+            <Link to="/"><span className="navbar-brand">FCCVoting</span></Link>
           </div>
               {
                 authenticated ? (
@@ -23,8 +23,8 @@ class Header extends React.Component {
                   </ul>
                 ) : (
                   <ul className="nav navbar-nav navbar-right">
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Log In</a></li>
+                    <li><Link to="/signin">Sign Up</Link></li>
+                    <li><Link to="/login">Log In</Link></li>
                   </ul>
                 )
               }

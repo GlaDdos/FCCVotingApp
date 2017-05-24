@@ -8,11 +8,13 @@ import register from './register';
 import vote from './vote';
 import userPolls from './userPolls';
 import polls from './polls';
+import poll from './poll';
 
 export default combineReducers({
   auth,
   vote,
   userPolls,
+  poll,
   polls,
   register,
   form
