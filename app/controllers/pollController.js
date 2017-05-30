@@ -77,7 +77,7 @@ export function deletePoll(req, res, next) {
   Poll.
     findOne({
       owner: req.user._id, 
-      _id: req.body.pollId
+      _id: req.params.pollId
     })
     .remove()
     .exec(err => {

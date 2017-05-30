@@ -23,7 +23,7 @@ class Login extends Component{
     }
 
     render(){
-        const { handleSubmit } = this.props;
+        const { handleSubmit, isAuthenticating, isAuthenticated } = this.props;
 
         return(
             <div>
@@ -38,7 +38,7 @@ class Login extends Component{
                         <label>Password</label>
                         <Field name="password" className="form-control" component="input" type="password" />
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="btn btn-primary" disabled={this.props.isAuthenticating}>Login</button>
                 </form>
             </div>
         )
@@ -47,7 +47,9 @@ class Login extends Component{
 
 function mapStateToProps(state){
     return {
-        errorMessage: state.auth.errorMessage
+        errorMessage: state.auth.errorMessage,
+        isAuthenticating: state.auth.isAuthenticating,
+        isAuthenticated: state.auth.isAuthenticated
     };
 }
 

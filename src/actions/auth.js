@@ -34,32 +34,32 @@ export function logoutUser(){
 }
 
 export function loginUser(user){
-return function(dispatch) {
-    dispatch(loginUserRequest());
+  return function(dispatch) {
+      dispatch(loginUserRequest());
 
-    return fetch('http://localhost:3000/auth/login', {
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      method: 'POST',
-      body: JSON.stringify(user)
-    })
-    .then( response => {
-      if(!response.ok){
-         return response.json().then(json => { throw Error(json.error) })
-      }
-      
-      return response.json() //idk why
-    })
-    //.then( response => response.json())
-    .then( json => {
-      cookie.save('token', json.token, { path: '/' });
-      cookie.save('user', json.user, { path: '/' });
-      dispatch(loginUserSuccess(json));
-      browserHistory.push('/');
-    })
-    .catch(error => {console.dir(error); dispatch(loginUserFailture(error))})
-  }
+      return fetch('http://localhost:3000/auth/login', {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        method: 'POST',
+        body: JSON.stringify(user)
+      })
+      .then( response => {
+        if(!response.ok){
+          return response.json().then(json => { throw Error(json.error) })
+        }
+        
+        return response.json();
+      })
+      //.then( response => response.json())
+      .then( json => {
+        cookie.save('token', json.token, { path: '/' });
+        cookie.save('user', json.user, { path: '/' });
+        dispatch(loginUserSuccess(json));
+        browserHistory.push('/');
+      })
+      .catch(error => {console.dir(error); dispatch(loginUserFailture(error))})
+    }
 }
 
 export function logout() {

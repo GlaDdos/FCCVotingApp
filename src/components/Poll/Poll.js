@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 
 import { vote } from '../../actions/vote';
 import { getPoll } from '../../actions/poll';
@@ -7,24 +8,25 @@ import { getPoll } from '../../actions/poll';
 import Chart from '../Chart/Chart';
 
 
+const form = reduxForm({
+  form: 'vote'
+});
+
 export class Poll extends React.Component {
   constructor(props){
     super(props);
-
-    this.formSubmit = this.formSubmit.bind(this);
   }
 
   componentWillMount(){
     this.props.getPoll(this.props.params.id);
   }
 
-  formSubmit(e){
-    e.preventDefault();
-
-    this.props.vote(this.props.poll._id, this.props.poll.options[this.state.selectedOption]._id);
+  handleFormSubmit(formProps){
+    this.props.vote(this.props.params.id, formProps.option); 
   }
 
   render(){
+    const { handleSubmit, pristine, submitting } = this.props;
     if(!this.props.dataSuccess){
       return (
         <div className="centered"><p>Data is fetching</p></div>
@@ -45,24 +47,23 @@ export class Poll extends React.Component {
 
         <div className="row align-items-center">
           <div className="col-md-6">
-            <form onSubmit={this.formSubmit}>
+            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
               {
                 this.props.poll.options.map((option, index) => (
                   <div className="radio" key={index}>
                     <label>
-                      <input
+                      <Field
+                        name='option'
+                        component="input"
                         type="radio"
-                        id={option._id}
-                        value={index}
-                        checked={index}
-
+                        value={option._id}
                       />
                       {option.name}
                     </label>
                   </div>
                 ))
               }
-              <button className="btn btn-default" type="submit">Save</button>
+              <button className="btn btn-default" type="submit" disabled={pristine | submitting}>Save</button>
             </form>
           </div>
           
@@ -96,4 +97,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Poll);
+export default connect(mapStateToProps, mapDispatchToProps)(form(Poll));

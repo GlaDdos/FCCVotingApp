@@ -8,7 +8,7 @@ const List = (props) => {
 
     if(props.isSuccess){
         body = 
-            <div className="list-group">
+            <tbody>
             {
                 props.polls.map((poll, index) => (
                     <ListRow index={index} 
@@ -17,10 +17,12 @@ const List = (props) => {
                         time={new Date(poll.date).toLocaleDateString()} 
                         votes={poll.votes}
                         id={poll._id}
+                        token={props.token}
+                        deletePoll={props.deletePoll}
                     />
                 ))
             }
-            </div>
+            </tbody>
     } else {
         body = <div className="centered"><p>Data is fetching</p></div>
     }
@@ -35,8 +37,10 @@ const List = (props) => {
             </div>
 
             <div className="panel-body">
-                <ListHeader />
-                {body}
+                <table className="table table-hover">
+                    <ListHeader />
+                    {body}
+                </table>
             </div>
         </div>
         </div>

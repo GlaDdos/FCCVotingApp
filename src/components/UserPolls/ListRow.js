@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const ListRow = (props) => {
     return(
-        <div className="row">
-            <div className="col-md-5">{ props.title }</div>
-            <div className="col-md-3 centered">{ props.time }</div>
-            <div className="col-md-3 centered">{ props.votes }</div>
-            <div className="col-md-1 centered"><span className="label label-danger">Delete</span></div>
-        </div>
+        <tr>
+            <td><Link to={`/poll/${props.id}`}>{ props.title }</Link></td>
+            <td>{ props.time }</td>
+            <td>{ props.votes }</td>
+            <td onClick={() => {props.deletePoll(props.token, props.id)}}><span className="label label-danger">Delete</span></td>
+        </tr>
     );
 }
 
