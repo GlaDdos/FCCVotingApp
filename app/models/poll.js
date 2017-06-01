@@ -23,6 +23,15 @@ Poll.virtual('votes').get(function(){
     }, 0);
 });
 
+Poll.statics.addOption = function(id, optionName, callback) {
+    return this.findOneAndUpdate({
+        _id: id
+    },
+    {
+        $push: {'options': { name: optionName, votes: 0 }}
+    }, callback);
+};
+
 Poll.set('toObject', {virtuals: true});
 
 export default mongoose.model("Poll", Poll);

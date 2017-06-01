@@ -1,6 +1,6 @@
 'use strict';
 
-import { addPoll, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
+import { addPoll, addOption, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
 import { login, register } from '../controllers/authentication';
 import express from 'express';
 import passport from 'passport';
@@ -23,7 +23,7 @@ export default function (app) {
 
   app.route('/api/poll/:pollId')
     .get(getPoll)
-   // .post(requireAuth, addOption)
+    .post(requireAuth, addOption)
     .delete(requireAuth, deletePoll)
 
   app.route('/api/poll/:pollId/:optionId')
@@ -39,4 +39,5 @@ export default function (app) {
 
   app.route('/auth/login')
     .post(requireLogin, login);
+
 }

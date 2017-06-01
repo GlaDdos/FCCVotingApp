@@ -89,3 +89,17 @@ export function deletePoll(req, res, next) {
 
     })
 }
+
+export function addOption(req, res, next) {
+
+  //todo: prevent duplicating?
+  Poll
+    .addOption(req.params.pollId, req.body.optionName)
+    .exec( (err, poll) => {
+      if(err) {
+        throw err;
+      } else {
+        res.json(poll);
+      }
+    })
+}
