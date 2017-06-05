@@ -18,12 +18,17 @@ export default  class Chart extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if(this.chartHandle) {
-      this.chartHandle.destroy();
-      this.chartHandle = null;
+    if(prevProps.poll !== this.props.poll){
+
+      if(this.chartHandle) {
+        this.chartHandle.destroy();
+        this.chartHandle = null;
+      }
+      
+     this.chartHandle = this.createChart();
     }
 
-     this.chartHandle = this.createChart();
+
     
   }
 

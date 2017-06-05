@@ -1,6 +1,7 @@
 'use strict';
 
 import fetch from 'isomorphic-fetch';
+import { browserHistory } from 'react-router';
 import {
   USER_POLLS_DATA_REQUEST,
   USER_POLLS_DATA_SUCCESS,
@@ -108,7 +109,10 @@ export function createPoll(token, data){
         body: JSON.stringify(data)
       })
       .then( response => response.json())
-      .then( json => dispatch(userPollCreateSuccess(json)));
+      .then( json => {
+        dispatch(userPollCreateSuccess(json));
+        browserHistory.push(`/poll/${json._id}`);
+      });
   };
 }
 

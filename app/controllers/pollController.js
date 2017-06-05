@@ -13,10 +13,10 @@ export function addPoll(req, res, next) {
       options: body.options
     });
 
-    newPoll.save((err) => {
+    newPoll.save((err, doc) => {
       if (err) { throw err; }
       else {
-        res.json({ok: true});
+        res.json(doc);
       }
     });
 }
@@ -48,14 +48,20 @@ export function getUserPolls(req, res, next) {
 }
 
 export function votePoll(req, res, next) {
-  Poll.update(
-    {_id: req.params.pollId, 'options._id': req.params.optionId},
-    {$inc: { 'options.$.votes': 1}},
-    (err, poll) => {
-      if(err) { throw err; }
-      res.json(poll);
-    }
-  );
+  Poll
+    .findOneAndUpdate(
+      {_id: req.params.pollId, 'options._id': req.params.optionId},
+      {$inc: { 'options.$.votes': 1}},
+      {new: true})
+    .populate('owner', 'profile')
+    .exec( function(err, poll){
+      if(err) {
+        throw err;
+      } else {
+        res.json(poll);
+      }
+    });
+
 }
 
 export function getPoll(req, res, next){
