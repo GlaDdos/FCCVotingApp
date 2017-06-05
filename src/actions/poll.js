@@ -4,7 +4,13 @@ import fetch from 'isomorphic-fetch';
 import {
     POLL_DATA_REQUEST,
     POLL_DATA_SUCCESS,
-    POLLS_DATA_FAILTURE
+    POLL_DATA_FAILTURE,
+    POLL_UPDATE_REQUEST,
+    POLL_UPDATE_SUCCESS,
+    POLL_UPDATE_FAILTURE,
+
+    POLL_ADD_OPTION_ENABLE,
+    POLL_ADD_OPTION_DISABLE
 } from '../const';
 
 export function pollDataRequest(){
@@ -32,6 +38,43 @@ export function pollDataFailture(error){
     };
 }
 
+export function pollUpdateRequest(){
+    return {
+        type: POLL_UPDATE_REQUEST
+    };
+}
+
+export function pollUpdateSuccess(poll){
+    return {
+        type: POLL_UPDATE_SUCCESS,
+        payload: {
+            poll
+        }
+    };
+}
+
+export function pollUpdateFailture(error) {
+    return {
+        type: POLL_UPDATE_FAILTURE,
+        payload: {
+            status: error.response.status,
+            statusText: error.response.statusText
+        }
+    };
+}
+
+export function pollAddOptionEnable(){
+    return {
+        type: POLL_ADD_OPTION_ENABLE
+    };
+}
+
+export function pollAddOptionDisable(){
+    return {
+        type: POLL_ADD_OPTION_DISABLE
+    };
+}
+
 export function getPoll(pollId){
     return function(dispatch) {
         dispatch(pollDataRequest());
@@ -40,5 +83,23 @@ export function getPoll(pollId){
             })
             .then( response => response.json())
             .then(json => dispatch(pollDataSuccess(json)));
+    };
+}
+
+export function updatePoll(token, pollId, option){
+    return function (dispatch) {
+        dispatch(pollUpdateRequest());
+        
+        return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+            method: 'POST',
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`
+            }),
+            body: JSON.stringify(option)
+        })
+        .then( response => response.json())
+        .then( json => dispatch(pollUpdateSuccess(json)))
     };
 }

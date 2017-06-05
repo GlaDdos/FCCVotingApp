@@ -91,10 +91,9 @@ export function deletePoll(req, res, next) {
 }
 
 export function addOption(req, res, next) {
-
-  //todo: prevent duplicating?
   Poll
-    .addOption(req.params.pollId, req.body.optionName)
+    .addOption(req.params.pollId, req.body.option)
+    .populate('owner', 'profile')
     .exec( (err, poll) => {
       if(err) {
         throw err;

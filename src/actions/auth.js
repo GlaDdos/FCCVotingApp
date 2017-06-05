@@ -68,5 +68,6 @@ export function logout() {
     cookie.remove('user', { path: '/'});
 
     dispatch(logoutUser());
+    browserHistory.push('/');
   };
 }

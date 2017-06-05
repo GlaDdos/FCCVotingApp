@@ -2,8 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
+import NewOption from './NewOption';
+
 import { vote } from '../../actions/vote';
-import { getPoll } from '../../actions/poll';
+import { getPoll, pollAddOptionEnable, pollAddOptionDisable } from '../../actions/poll';
 
 import Chart from '../Chart/Chart';
 
@@ -20,13 +22,19 @@ export class Poll extends React.Component {
   componentWillMount(){
     this.props.getPoll(this.props.params.id);
   }
+  
+  componentWillUnmount(){
+    this.props.pollAddOptionDisable();
+  }
 
   handleFormSubmit(formProps){
     this.props.vote(this.props.params.id, formProps.option); 
   }
 
   render(){
-    const { handleSubmit, pristine, submitting } = this.props;
+    const { handleSubmit, pristine, submitting, poll, addOption, isAuthenticated } = this.props;
+    const { pollAddOptionEnable } = this.props;
+
     if(!this.props.dataSuccess){
       return (
         <div className="centered"><p>Data is fetching</p></div>
@@ -49,7 +57,7 @@ export class Poll extends React.Component {
           <div className="col-md-6">
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
               {
-                this.props.poll.options.map((option, index) => (
+                poll.options.map((option, index) => (
                   <div className="radio" key={index}>
                     <label>
                       <Field
@@ -63,12 +71,25 @@ export class Poll extends React.Component {
                   </div>
                 ))
               }
-              <button className="btn btn-default" type="submit" disabled={pristine | submitting}>Save</button>
+              
+              {
+                isAuthenticated ?  <div className="radio"><label onClick={pollAddOptionEnable}>Other</label></div> : null
+              }
+
+              {
+                addOption ? null : <button className="btn btn-default" type="submit" disabled={pristine | submitting}>Save</button>
+              }
+
             </form>
+
+            {
+              addOption ? <NewOption pollId={this.props.params.id} /> : null
+            }
+
           </div>
           
           <div className="col-md-6">
-            <Chart poll={this.props.poll}/>
+            <Chart poll={poll}/>
           </div>
 
         </div>
@@ -80,20 +101,25 @@ export class Poll extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return{
     vote: (id, voteId) => dispatch(vote(id, voteId)),
-    getPoll: (pollId) => dispatch(getPoll(pollId))
+    getPoll: (pollId) => dispatch(getPoll(pollId)),
+    pollAddOptionEnable: () => dispatch(pollAddOptionEnable()),
+    pollAddOptionDisable: () => dispatch(pollAddOptionDisable())
   };
 };
 
 const mapStateToProps = (state) => {
   return {
+    isAuthenticated: state.auth.isAuthenticated,
+
     isRequesting: state.vote.isRequesting,
     isSuccess: state.vote.isSuccess,
     statusText: state.vote.statusText,
 
+    addOption: state.poll.addOption,
     dataRequesting: state.poll.isRequesting,
     dataSuccess: state.poll.isSuccess,
-
     poll: state.poll.poll
+
   };
 };
 

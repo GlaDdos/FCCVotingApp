@@ -6,7 +6,25 @@ export default  class Chart extends React.Component {
   constructor(props){
     super(props);
 
+    //component wide handler to destroy chart after new option is created
+    this.chartHandle = false;
+
     this.generateRandomColor = this.generateRandomColor.bind(this);
+    this.createChart = this.createChart.bind(this);
+  }
+
+  componentDidMount(){
+    this.chartHandle = this.createChart();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.chartHandle) {
+      this.chartHandle.destroy();
+      this.chartHandle = null;
+    }
+
+     this.chartHandle = this.createChart();
+    
   }
 
   generateRandomColor(number){
@@ -23,9 +41,8 @@ export default  class Chart extends React.Component {
     return colors;
   }
 
-  componentDidMount(){
+  createChart(){
     const ctx = document.getElementById('chart');
-    console.log(this.props.poll);
 
     const data = this.props.poll.options.map( (option) => {
        return Number(option.votes);
@@ -37,9 +54,7 @@ export default  class Chart extends React.Component {
 
     const colors = this.generateRandomColor(data.length);
 
-    console.log(data);
-
-    const myChart = new ChartJs(ctx, {
+    return new ChartJs(ctx, {
       type: 'pie',
       data: {
         labels: labels,
@@ -55,8 +70,6 @@ export default  class Chart extends React.Component {
         }
       }
     });
-
-
   }
 
   render(){

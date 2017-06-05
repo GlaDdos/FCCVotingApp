@@ -28,7 +28,10 @@ Poll.statics.addOption = function(id, optionName, callback) {
         _id: id
     },
     {
-        $push: {'options': { name: optionName, votes: 0 }}
+        $push: {'options': { name: optionName, votes: 1 }}
+    },
+    {
+        new: true
     }, callback);
 };
 
