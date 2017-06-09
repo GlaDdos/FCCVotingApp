@@ -23,32 +23,45 @@ class SignIn extends Component {
     }
   }
   render(){
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine } = this.props;
 
     return(
-      <div>
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          {this.renderAlert()}
-          <div className="row">
-            <div className="col-md-6">
-              <label>First name</label>
-              <Field name="firstName" className="form-control" component="input" type="text" />
+      <div className="row">
+        <div className="col-sm-10 col-md-8 col-lg-8 center-block">
+          <div className="form-container">
+            <div className="form-header">
+              <div className="form-header-left">
+                <h3>Sign up to VoterApp</h3>
+                <p>Fill fields below to create an account: </p>
+              </div>
+              <div className="form-header-right">
+                <span className="glyphicon glyphicon-pencil" />
+              </div>
             </div>
-            <div className="col-md-6">
-              <label>Last name</label>
-              <Field name="lastName" className="form-control" component="input" type="text" />
-            </div>
-            <div className="col-md-6">
-              <label>Email</label>
-              <Field name="email" className="form-control" component="input" type="text" />
-            </div>
-            <div className="col-md-6">
-              <label>Password</label>
-              <Field name="password" className="form-control" component="input" type="password" />
+            <div className="form-body">
+              <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                {this.renderAlert()}
+                  <div className="form-group">
+                    <label className="sr-only" htmlFor="firstName">First name</label>
+                    <Field name="firstName" className="form-control" component="input" type="text"  placeholder="First name" />
+                  </div>
+                  <div className="form-group">
+                    <label className="sr-only" htmlFor="lastName">Last name</label>
+                    <Field name="lastName" className="form-control" component="input" type="text" placeholder="Last name" />
+                  </div>
+                  <div className="form-group">
+                    <label className="sr-only" htmlFor="email">Email</label>
+                    <Field name="email" className="form-control" component="input" type="text" placeholder="Email"/>
+                  </div>
+                  <div className="form-group">
+                    <label className="sr-only" htmlFor="password">Password</label>
+                    <Field name="password" className="form-control" component="input" type="password" placeholder="Password" />
+                  </div>
+                <button type="submit" className="btn" disabled={pristine}>Sign In</button>
+              </form>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Sign In</button>
-        </form>
+        </div>
       </div>
     );
   }
