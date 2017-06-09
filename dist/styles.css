@@ -42,6 +42,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', end
   border-color: #65a8da
 }
 
+.btn-link-1 {
+  display: block;
+  height: 50px;
+  padding: 15px 20px 0 20px;
+  background: rgba(0, 0, 0, 0.0);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 16px;
+  color: #fff;
+}
+
+.btn-link-1:hover{
+  outline: 0;
+  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
 .btn-link-2 {
   display: inline-block;
   height: 50px;
@@ -104,9 +123,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', end
   text-align: center;
 }
 
+.panel {
+  margin-top: 50px;
+   background: #444;
+   background: rgba(0, 0, 0, 0.35);
+   border-color: transparent;
+}
+
 .panel-info > .panel-heading{
-  background-color: #65a8da;
-  color: white;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.0);
+    border-radius: 5px 5px 0 0;
+    border-color: transparent;
+}
+
+.panel-heading h3 {
+  font-weight: 300;
+  color: #fff;
 }
 
 span.icon {
@@ -136,7 +169,6 @@ span.icon {
 }
 
 .form-header-left h3 {
-  margin-top: 0;
   font-weight: 300;
   color: #fff;
 }

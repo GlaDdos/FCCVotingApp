@@ -21,7 +21,7 @@ export class ListPolls extends React.Component {
         {
           this.props.polls.map((poll, index) => (
             <Link key={index} to={'/poll/' + poll._id}>
-              <button key={index} type="button" className="list-group-item">{poll.title}</button>
+              <div key={poll._id} className="btn-link-1">{poll.title}</div>
             </Link>
           ))
         }
@@ -34,7 +34,7 @@ export class ListPolls extends React.Component {
       <div className="panel panel-info">
         <div className="panel-heading">
           <div className="centered">
-            <h4>Polls created by users.</h4>
+            <h3>Polls created by users.</h3>
           </div>
         </div>
 
