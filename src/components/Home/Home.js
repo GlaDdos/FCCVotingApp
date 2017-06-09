@@ -15,7 +15,7 @@ export default class Home extends Component {
         <br />
           <div className="text-center">
             <div className="btn-group btn-group-lg">
-              <Link to="poll"><button type="button" className="btn btn-primary">View Polls</button></Link>
+              <Link to="poll"><div className="btn btn-link-2">View Polls</div></Link>
               <Link to="login"><button type="button" className="btn btn-primary">Log In</button></Link>
               <Link to="signin"><button type="button" className="btn btn-primary">Sign In</button></Link>
             </div>

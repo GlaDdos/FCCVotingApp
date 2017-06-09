@@ -4,7 +4,7 @@ body {
   font-weight: 300;
   color: #888;
   line-height: 30px;
-  height: 100vh;
+  min-height: 100vh;
 
   background: #7abcff; /* Old browsers */
 background: -moz-linear-gradient(top, #7abcff 0%, #d070ea 93%); /* FF3.6-15 */
@@ -213,12 +213,12 @@ button.btn {
   text-shadow: none;
 }
 
-button.btn:hover {
+.btn:hover {
   opacity: 0.6;
   color: #fff;
 }
 
-button.btn:focus {
+.btn:focus {
   outline: 0;
   opacity: 0.6;
   background: #19b9e7;
@@ -236,4 +236,19 @@ button.btn:focus {
 
 .center-block {
   float: none;
+}
+
+.jumbotron {
+  margin-top: 15vh;
+  padding: 25px 25px 30px 25px;
+  background: #444;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.jumbotron p {
+  color: #fff;
+}
+
+.jumbotron h1 {
+  color: #fff;
 }
