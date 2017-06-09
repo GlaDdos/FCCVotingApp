@@ -21,6 +21,8 @@ export function addPoll(req, res, next) {
     });
 }
 
+//TODO: rewrite functions to not have req, res dependency ie
+//getPolls(params, callback)
 export function getPolls(req, res, next) {
   Poll
     .find({})

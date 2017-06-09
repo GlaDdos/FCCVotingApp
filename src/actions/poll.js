@@ -101,5 +101,6 @@ export function updatePoll(token, pollId, option){
         })
         .then( response => response.json())
         .then( json => dispatch(pollUpdateSuccess(json)))
+        .then( dispatch(pollAddOptionDisable()))
     };
 }
