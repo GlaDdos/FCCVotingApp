@@ -43,48 +43,47 @@ export class Poll extends React.Component {
 
     return(
       <div className="container-fluid">
-        <div className="row">
           <div className="panel panel-info">
             <div className="panel-heading">
               <div className="centered">
-                <h4>{this.props.poll.title} by {this.props.poll.owner.profile.firstName} {this.props.poll.owner.profile.lastName}</h4>
+                <h3>{this.props.poll.title} by {this.props.poll.owner.profile.firstName} {this.props.poll.owner.profile.lastName}</h3>
               </div>
             </div>
-          </div>
-        </div>
 
         <div className="row align-items-center">
           <div className="col-md-6">
-            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-              {
-                poll.options.map((option, index) => (
-                  <div className="radio" key={index}>
-                    <label>
-                      <Field
-                        name='option'
-                        component="input"
-                        type="radio"
-                        value={option._id}
-                      />
-                      {option.name}
-                    </label>
-                  </div>
-                ))
-              }
-              
-              {
-                isAuthenticated ?  <div className="radio"><label onClick={pollAddOptionEnable}>Other</label></div> : null
-              }
+            <div className="form_container">
+              <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                {
+                  poll.options.map((option, index) => (
+                      <label className="control control-radio">
+                        {option.name}
+                        <Field
+                          name='option'
+                          component="input"
+                          type="radio"
+                          value={option._id}
+                        />
+                        <div className="control_indicator"></div>
+                        <div className="control_indicator_after"></div>
+                      </label>
+                  ))
+                }
+                
+                {
+                  (isAuthenticated && !addOption) ?  <div><label className="control control-radio" onClick={pollAddOptionEnable}>Other<div className="control_indicator"></div><div className="control_indicator_after"></div></label></div> : null
+                }
 
+                {
+                  addOption ? null : <button className="btn" type="submit" disabled={pristine | submitting}>Vote</button>
+                }
+
+              </form>
               {
-                addOption ? null : <button className="btn btn-default" type="submit" disabled={pristine | submitting}>Save</button>
+                addOption ? <NewOption pollId={this.props.params.id} /> : null
               }
+            </div>
 
-            </form>
-
-            {
-              addOption ? <NewOption pollId={this.props.params.id} /> : null
-            }
 
           </div>
           
@@ -93,6 +92,7 @@ export class Poll extends React.Component {
           </div>
 
         </div>
+      </div>
     </div>
     );}
   }

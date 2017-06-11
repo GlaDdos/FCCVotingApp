@@ -22,17 +22,17 @@ export  class NewOption extends React.Component {
     render(){
         const { handleSubmit, pristine, submitting } = this.props;
         return (
-            <div className="toAdd">
+            <div className="form-inline">
                 <form onSubmit={handleSubmit(this.handleFormSubmit)}>
-                    <label>
+                    <label className="sr-only">New option</label>
                         <Field
                             name="option"
                             component="input"
                             type="text"
-                            placeholder="New option" />
-                    </label>
-                    <button className="btn btn-default" type="submit" disabled={pristine | submitting }>{'Save & vote'}</button>
-                    <div className="btn btn-default" onClick={this.props.pollAddOptionDisable} >Cancel</div>
+                            placeholder="New option"
+                            className="form-control input-short" />
+                    <button className="btn btn-short " type="submit" disabled={pristine | submitting }>{'Save & vote'}</button>
+                    <button className="btn btn-short btn-red" onClick={this.props.pollAddOptionDisable} >Cancel</button>
                 </form>
             </div>
         );

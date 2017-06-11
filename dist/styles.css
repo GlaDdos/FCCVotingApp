@@ -230,6 +230,11 @@ input[type="password"]:focus {
   box-shadow: none;
 }
 
+.input-short {
+  display: inline-block;
+  width: inherit;
+}
+
 button.btn {
   height: 50px;
   margin: 0;
@@ -257,9 +262,18 @@ button.btn {
   color: #fff;
 }
 
+form button.btn-red {
+  background-color: #c12e2a;
+}
 
-.form-body form button.btn {
+form button.btn {
   width: 100%;
+}
+
+form button.btn-short {
+  width: inherit;
+  line-height: 40px;
+  border-radius: 0;
 }
 
 .social-login {
@@ -283,4 +297,99 @@ button.btn {
 
 .jumbotron h1 {
   color: #fff;
+}
+
+/*radio buttons */
+
+.control-group {
+  display: inline-block;
+  width: 200px;
+  height: 310px;
+  margin: 10px;
+  padding: 30px;
+  text-align: left;
+  vertical-align: top;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.control {
+  color: #fff;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+  position: relative;
+  display: block;
+  margin-bottom: 5px;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.control_indicator {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background: #e6e6e6;
+}
+
+.control-radio .control_indicator {
+  border-radius: 50%;
+}
+
+.control:hover input ~ .control_indicator,
+.control input:focus ~ .control_indicator {
+  background: #ccc;
+}
+
+.control input:checked ~ .control_indicator {
+  background: #2aa1c0;
+}
+
+.control input:checked ~ .control_indicator_after {
+  display: block;
+}
+
+.control:hover input:not([disabled]):checked ~ .control_indicator,
+.control input:checked:focus ~ .control_indicator {
+  background: #2aa1c0;
+}
+
+.control input:disabled ~ .control_indicator {
+  pointer-events: none;
+  opacity: 0.6;
+  background: #e6e6e6;
+}
+
+/* mark */
+.control_indicator_after {
+  position: absolute;
+  display: none;
+  content: '';
+}
+
+.control-radio .control_indicator_after {
+  top: 10px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.control-radio input:disabled ~ .control_indicator_after {
+  background: #7b7b7b;
+}
+
+.form_container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-left: 20px;
 }

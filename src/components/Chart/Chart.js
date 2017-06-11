@@ -64,12 +64,16 @@ export default  class Chart extends React.Component {
       data: {
         labels: labels,
         datasets: [{
+          borderColor: 'rgba(0,0,0,0.3)',
           data: data,
           backgroundColor: colors
         }]
       }, 
       options: {
         legend: {
+          labels: {
+            fontColor: '#fff'
+          },
           display: true,
           position: 'bottom'
         }
