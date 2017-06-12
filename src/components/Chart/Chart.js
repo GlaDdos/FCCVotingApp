@@ -83,7 +83,7 @@ export default  class Chart extends React.Component {
 
   render(){
     return (
-      <div>Chart.js
+      <div>
         <canvas id='chart' width='400' height='400' />
       </div>
     );
