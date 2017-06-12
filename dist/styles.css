@@ -235,6 +235,10 @@ input[type="password"]:focus {
   width: inherit;
 }
 
+.input-long {
+  width: 100%;
+}
+
 button.btn {
   height: 50px;
   margin: 0;
@@ -248,6 +252,19 @@ button.btn {
   color: #fff;
   border-radius: 4px;
   text-shadow: none;
+}
+
+button.close {
+  float: left;
+  padding-top: 15px;
+  color: red;
+  text-shadow: none;
+}
+
+button.close:hover,
+button.close:focus {
+  color: red;
+  opacity: .5;
 }
 
 .btn:hover {

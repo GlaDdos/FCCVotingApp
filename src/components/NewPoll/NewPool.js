@@ -1,100 +1,59 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Field, FieldArray, reduxForm } from 'redux-form';
+
 import { createPoll } from '../../actions/userPolls';
+import renderField from './RenderField';
+import renderOptions from './RenderOptions';
+
+const form = reduxForm({
+  form: 'newPoll'
+});
 
 export class NewPoll extends React.Component {
   constructor(props){
     super(props);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
 
-    this.state = {
-      owner: null,
-      options: [],
-      title: ''
+  handleFormSubmit(formProps){
+
+    const optionsObj = formProps.options.map((el) => (
+      {'name': el}
+    ));
+
+    const data = {
+      owner: this.props.userId,
+      title: formProps.title,
+      options: optionsObj
     };
 
-    this.handleChange = this.handleTitleChange.bind(this);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-  }
-
-  componentDidMount(){
-    this.setState({ owner: this.props.userId });
-
-  }
-
-  handleTitleChange(e){
-    this.setState({title: e.target.value});
-  }
-
-  addOption(){
-    this.state.options.push({name: ''});
-    this.setState({options: this.state.options});
-  }
-
-  handleOptionChange(e, index){
-    const options = this.state.options;
-    options[index].name = e.target.value;
-    this.setState({
-      options,
-    });
-  }
-
-  removeOption(index){
-    this.state.options.splice(index, 1);
-    this.setState({options: this.state.options});
+    this.props.createPoll(this.props.token, data);
   }
 
   render(){
+    const { handleSubmit,  pristine, reset, submitting } = this.props;
     return(
-      <div className="panel panel-info">
-        <div className="panel-heading">
-          <div className="centered">
-            <input
-              type="text"
-              className="input-title"
-              placeholder="Add a titile"
-              value={this.state.title}
-              onChange={this.handleTitleChange}
-            />
-          </div>
-        </div>
-
-        <div className="panel-body">
-          <div className="centered">
-            {
-              this.state.options.map((options, index) => (
-                <div key={index}>
-                  <label>{index + 1}.</label>
-                  <input
-                    type="text"
-                    key={index}
-                    className="input-option"
-                    value={this.state.options[index].name}
-                    onChange={event => this.handleOptionChange(event, index)}
-                  />
-                  <span className="glyphicon glyphicon-minus icon" aria-label="remove option" onClick={() => (this.removeOption(index))} />
-                </div>
-              ))
-            }
+      <form onSubmit={handleSubmit(this.handleFormSubmit)}>
+        <div className="panel panel-info">
+          
+          <div className="panel-heading">
+            <div className="col-sm-10 col-md-8 col-lg-8 center-block">
+              <Field name="title" type="text" component={renderField} label="Title" />
+            </div>
           </div>
 
-          <div className="centered">
-            <button type="submit" action="" className="btn-add-option" onClick={this.addOption.bind(this)}><span className="glyphicon glyphicon-plus" aria-hidden="true" /> Add an option</button>
-          </div>
-
-          <div className="form-group">
-            <div className="text-right">
-              {
-                //TODO: payload should contain a user id (todo after authentication)
-              }
-              <button type="submit" action="" className="btn btn-default" onClick={() => this.props.createPoll(this.props.token, this.state)}>Save</button>
-              {
-                //TODO: redirect to poolView?
-              }
-              <button type="submit" action="" className="btn btn-default" onClick={''}>Cancel</button>
+          <div className="panel-body">
+            <div className="col-sm-10 col-md-8 col-lg-8 center-block">
+              <FieldArray name="options" component={renderOptions} />
+            </div>
+            <div className="pull-right">
+              <button className="btn btn-short" type="submit" disabled={pristine | submitting}>Save</button>
+              <button className="btn btn-short btn-red" type="button" disabled={pristine | submitting} onClick={reset}>Clear</button>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 }
@@ -113,4 +72,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPoll);
+export default connect(mapStateToProps, mapDispatchToProps)(form(NewPoll));
