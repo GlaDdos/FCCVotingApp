@@ -410,3 +410,11 @@ form button.btn-short {
   margin-bottom: 30px;
   padding-left: 20px;
 }
+
+div.warning {
+  background-color: #de5151;
+  color: #fff;
+  text-align: center;
+  margin: 5px auto 0 auto;
+  width: 80%;
+}

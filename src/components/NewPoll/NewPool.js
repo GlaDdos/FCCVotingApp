@@ -6,8 +6,11 @@ import { createPoll } from '../../actions/userPolls';
 import renderField from './RenderField';
 import renderOptions from './RenderOptions';
 
+import validate from './validate';
+
 const form = reduxForm({
-  form: 'newPoll'
+  form: 'newPoll',
+  validate
 });
 
 export class NewPoll extends React.Component {
@@ -32,7 +35,7 @@ export class NewPoll extends React.Component {
   }
 
   render(){
-    const { handleSubmit,  pristine, reset, submitting } = this.props;
+    const { error, handleSubmit,  pristine, reset, submitting } = this.props;
     return(
       <form onSubmit={handleSubmit(this.handleFormSubmit)}>
         <div className="panel panel-info">
@@ -42,6 +45,8 @@ export class NewPoll extends React.Component {
               <Field name="title" type="text" component={renderField} label="Title" />
             </div>
           </div>
+
+           {error && <strong>{error}</strong>}
 
           <div className="panel-body">
             <div className="col-sm-10 col-md-8 col-lg-8 center-block">
