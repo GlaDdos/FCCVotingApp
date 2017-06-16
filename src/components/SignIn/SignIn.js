@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+
+import renderField from './RenderField';
 import { registerUser } from '../../actions/register';
 
+import validate from './validate';
+
 const form = reduxForm({
-  form: 'signIn'
+  form: 'signIn',
+  validate
 });
 
 class SignIn extends Component {
@@ -23,7 +28,7 @@ class SignIn extends Component {
     }
   }
   render(){
-    const { handleSubmit, pristine } = this.props;
+    const { handleSubmit, pristine, submitting, error, submitFailed } = this.props;
 
     return(
       <div className="row">
@@ -42,22 +47,21 @@ class SignIn extends Component {
               <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 {this.renderAlert()}
                   <div className="form-group">
-                    <label className="sr-only" htmlFor="firstName">First name</label>
-                    <Field name="firstName" className="form-control" component="input" type="text"  placeholder="First name" />
+                    <Field name="firstName" className="form-control" component={renderField} type="text"  label="First name"/>
                   </div>
                   <div className="form-group">
-                    <label className="sr-only" htmlFor="lastName">Last name</label>
-                    <Field name="lastName" className="form-control" component="input" type="text" placeholder="Last name" />
+                    <Field name="lastName" className="form-control" component={renderField} type="text" label="Last name" />
                   </div>
                   <div className="form-group">
-                    <label className="sr-only" htmlFor="email">Email</label>
-                    <Field name="email" className="form-control" component="input" type="text" placeholder="Email"/>
+                    <Field name="email" className="form-control" component={renderField} type="text" label="Email"/>
                   </div>
                   <div className="form-group">
-                    <label className="sr-only" htmlFor="password">Password</label>
-                    <Field name="password" className="form-control" component="input" type="password" placeholder="Password" />
+                    <Field name="password" className="form-control" component={renderField} type="password" label="Password" />
                   </div>
-                <button type="submit" className="btn" disabled={pristine}>Sign In</button>
+                   <div className="form-group">
+                    <Field name="passwordConfirmation" className="form-control" component={renderField} type="password" label="Confirm password" />
+                  </div>
+                <button type="submit" className="btn" disabled={pristine | submitting}>Sign In</button>
               </form>
             </div>
           </div>
