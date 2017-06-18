@@ -8,6 +8,7 @@ import { vote } from '../../actions/vote';
 import { getPoll, pollAddOptionEnable, pollAddOptionDisable } from '../../actions/poll';
 
 import Chart from '../Chart/Chart';
+import Loader from '../Utils/Loader';
 
 
 const form = reduxForm({
@@ -32,12 +33,12 @@ export class Poll extends React.Component {
   }
 
   render(){
-    const { handleSubmit, pristine, submitting, poll, addOption, isAuthenticated } = this.props;
+    const { handleSubmit, pristine, submitting, poll, addOption, isAuthenticated, isRequesting, dataRequesting } = this.props;
     const { pollAddOptionEnable } = this.props;
 
     if(!this.props.dataSuccess){
       return (
-        <div className="centered"><p>Data is fetching</p></div>
+          <Loader loading={dataRequesting} />
       )
     } else {
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import ListHeader from './ListHeader';
 import ListRow from './ListRow';
+import Loader from '../Utils/Loader';
 
 const List = (props) => {
     let body = null;
@@ -24,7 +25,7 @@ const List = (props) => {
             }
             </tbody>
     } else {
-        body = <div className="centered"><p>Data is fetching</p></div>
+        body = <Loader loading={props.isRequesting} />
     }
 
     return (

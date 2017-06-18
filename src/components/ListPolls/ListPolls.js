@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 
 import { getPolls } from '../../actions/polls';
 
+import Loader from '../Utils/Loader';
+
 export class ListPolls extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,8 @@ export class ListPolls extends React.Component {
   }
 
   render(){
+    const {isRequesting} = this.props;
+
     let body = null;
     if(this.props.isSuccess){
       body =
@@ -26,8 +30,6 @@ export class ListPolls extends React.Component {
           ))
         }
       </div>
-    }else{
-      body = <div className="centered"><p>Data is fetching</p></div>;
     }
 
     return(
@@ -41,6 +43,7 @@ export class ListPolls extends React.Component {
         <div className="panel-body">
           {body}
         </div>
+          <Loader loading={isRequesting} />
       </div>
     );
   }

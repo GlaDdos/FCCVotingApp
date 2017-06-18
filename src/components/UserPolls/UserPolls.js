@@ -23,6 +23,7 @@ class UserPolls extends Component {
             <List 
                 listTitle={`Polls created by ${this.props.firstName} ${this.props.lastName}`}
                 isSuccess={this.props.isSuccess} 
+                isRequesting={this.props.isRequesting}
                 polls={this.props.polls}
                 token={this.props.token}
                 deletePoll={this.props.deletePoll}
