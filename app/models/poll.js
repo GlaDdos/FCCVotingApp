@@ -5,17 +5,28 @@ import User from './user';
 
 const Schema = mongoose.Schema;
 
+function optionValidator(val){
+    console.log('validator');
+    return val ? true : false;
+}
+
+const custom = [optionValidator, "option must have a name."];
+
 const Poll = new Schema({
-   owner: {type: Schema.Types.ObjectId, ref: 'User'},
-   title: String ,
-   options: [{ name: String, votes: { type: Number, default: 0 } }] ,
+   owner: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+   title: {type: String, required: true},
+   options: [{ name: {type: String, validate: custom, required: true},votes: { type: Number, default: 0} }] ,
    date: { type: Date, default: Date.now }
 },
 {
     toObject: { virtuals: true },
     toJSON: { virtuals: true }
-}
-);
+});
+
+Poll.pre('findOneAndUpdate', function(next){
+    this.options.runValidators = true;
+    next();
+});
 
 Poll.virtual('votes').get(function(){
    return this.options.reduce( function( prev, current){
@@ -24,6 +35,7 @@ Poll.virtual('votes').get(function(){
 });
 
 Poll.statics.addOption = function(id, optionName, callback) {
+
     return this.findOneAndUpdate({
         _id: id
     },
@@ -38,3 +50,5 @@ Poll.statics.addOption = function(id, optionName, callback) {
 Poll.set('toObject', {virtuals: true});
 
 export default mongoose.model("Poll", Poll);
+
+//todo: needs validation so empty array is throwing error

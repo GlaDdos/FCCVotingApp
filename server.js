@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import routes from './app/routes/index';
+import errorHandler from './app/utils/errorHandler';
 
 dotenv.load();
 
@@ -35,6 +36,10 @@ app.use((req, res, next) => {
   next();
 });
 
+routes(app);
+
+app.use(errorHandler);
+
 
 app.listen(3000, function (err) {
   if(err){
@@ -45,5 +50,3 @@ app.listen(3000, function (err) {
     console.log('API server is listening...');
   }
 });
-
-routes(app);

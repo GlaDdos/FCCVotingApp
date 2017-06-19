@@ -1,112 +1,80 @@
 'use strict';
 
 import Poll from '../models/poll';
+import NotFound from './../utils/NotFoundError';
 
-export function addPoll(req, res, next) {
-
-    const body = req.body;
-    console.log(req.body.title);
+export function addPoll(userId, title, options) {
 
     const newPoll = Poll({
-      owner: body.owner,
-      title: body.title,
-      options: body.options
+      owner: userId,
+      title: title,
+      options: options
     });
 
-    newPoll.save((err, doc) => {
-      if (err) { throw err; }
-      else {
-        res.json(doc);
-      }
-    });
+    return newPoll.save();
 }
 
-//TODO: rewrite functions to not have req, res dependency ie
-//getPolls(params, callback)
-export function getPolls(req, res, next) {
-  Poll
-    .find({})
-    .populate('owner', 'profile')
-    .exec(function(err, polls){
-      if(err){
-        throw err;
-      } else {
-        res.json(polls);
-      }
-    });
+export function getPolls() {
+  return Poll
+      .find({})
+      .populate('owner', 'profile');
 }
 
-export function getUserPolls(req, res, next) {
-  Poll
-    .find({owner: req.params.userId})
-    .populate('owner', 'profile')
-    .exec( function(err, polls) {
-      if(err){
-        throw err;
-      } else {
-        res.json(polls);
-      }
-    });
+export function getUserPolls(userId) {
+  return Poll
+      .find({owner: userId})
+      .populate('owner', 'profile')
+      .catch( (err) => {
+        throw  new NotFound('User not found');
+      })
 }
 
-export function votePoll(req, res, next) {
-  Poll
-    .findOneAndUpdate(
-      {_id: req.params.pollId, 'options._id': req.params.optionId},
-      {$inc: { 'options.$.votes': 1}},
-      {new: true})
-    .populate('owner', 'profile')
-    .exec( function(err, poll){
-      if(err) {
-        throw err;
-      } else {
-        res.json(poll);
-      }
-    });
-
+export function votePoll(pollId, optionId) {
+  return Poll
+      .findOneAndUpdate(
+        {_id: pollId, 'options._id': optionId},
+        {$inc: { 'options.$.votes': 1}},
+        {new: true})
+      .populate('owner', 'profile');
 }
 
-export function getPoll(req, res, next){
-  Poll
-    .findOne({
-      _id: req.params.pollId
-    })
-    .populate('owner', 'profile')
-    .exec((err, poll) => {
-      if(err) {
-        throw err;
-      } else {
-        res.json(poll);
-      }
-    });
+export function getPoll(pollId){
+  return Poll
+      .findOne({
+        _id: pollId
+      })
+      .populate('owner', 'profile')
+      .then( poll => {
+        if(!poll){
+          throw new NotFound("Poll not found!");
+        } else {
+          return new Promise( (resolve, reject) => {
+            resolve(poll);
+          });
+        }
+      })
+      .catch( err => {
+        throw new NotFound("Poll not found!");
+      });
 }
 
-export function deletePoll(req, res, next) {
-  Poll.
-    findOne({
-      owner: req.user._id, 
-      _id: req.params.pollId
-    })
-    .remove()
-    .exec(err => {
-      if(err) {
-        throw err;
-      } else {
-        res.json({status: "ok"}) //todo: it's eturning ok even id there was no item to delete 
-      }
-
-    })
+export function deletePoll(userId, pollId) {
+  return Poll.
+      findOne({
+        owner: userId, 
+        _id: pollId
+      })
+      .then((poll) => {
+        if(poll){
+          poll.remove()
+        } else {
+          throw new NotFound("Poll not found!");
+        }
+      })
 }
 
-export function addOption(req, res, next) {
-  Poll
-    .addOption(req.params.pollId, req.body.option)
-    .populate('owner', 'profile')
-    .exec( (err, poll) => {
-      if(err) {
-        throw err;
-      } else {
-        res.json(poll);
-      }
-    })
+export function addOption(pollId, option) {
+  return Poll
+    .addOption(pollId, option)
+    .populate('owner', 'profile');
 }
