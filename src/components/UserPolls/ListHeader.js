@@ -4,9 +4,9 @@ const ListHeader = () => {
     return(
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Created</th>
-                <th>Votes</th>
+                <th><div className="btn-link-3" style={{height: 'inherit'}}>Title</div></th>
+                <th><div className="btn-link-3 text-center" style={{height: 'inherit'}}>Created</div></th>
+                <th><div className="btn-link-3 text-center" style={{height: 'inherit'}}>Votes</div></th>
                 <th></th>
             </tr>
         </thead>

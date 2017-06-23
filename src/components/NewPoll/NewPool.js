@@ -41,7 +41,7 @@ export class NewPoll extends React.Component {
         <div className="panel panel-info">
           
           <div className="panel-heading">
-            <div className="col-sm-10 col-md-8 col-lg-8 center-block">
+            <div className="col-sm-10 col-md-8 col-lg-8 center-block" style={{marginTop: '30px'}}>
               <Field name="title" type="text" component={renderField} label="Title" />
             </div>
           </div>
@@ -52,7 +52,7 @@ export class NewPoll extends React.Component {
             <div className="col-sm-10 col-md-8 col-lg-8 center-block">
               <FieldArray name="options" component={renderOptions} />
             </div>
-            <div className="pull-right">
+            <div className="row-footer pull-right">
               <button className="btn btn-short" type="submit" disabled={pristine | submitting}>Save</button>
               <button className="btn btn-short btn-red" type="button" disabled={pristine | submitting} onClick={reset}>Clear</button>
             </div>
