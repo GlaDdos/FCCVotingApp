@@ -588,3 +588,36 @@ div.voteOption {
   margin: 30px 15px 10px 0;
   
 }
+
+.modal {
+  display: block;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-body {
+  padding-top: 15vh;
+  margin: auto;
+  float: none;
+  z-index: 1500;
+}
+
+.modal .panel.panel-error .panel-heading {
+  background-color: #c12e2a;
+  color: #fff;
+}
+
+.modal .panel.panel-error .panel-body {
+  background-color: #fff;
+}
+
+.modal .panel .panel-footer {
+  text-align: right;
+}
+
+.modal .panel .btn {
+  height: 40px;
+  line-height: 0;
+}
