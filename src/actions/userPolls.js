@@ -40,8 +40,8 @@ export function userPollsDataFailture(error){
   return {
     type: USER_POLLS_DATA_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   };
 }
@@ -66,8 +66,8 @@ export function userPollUpdateFailture(error){
   return {
     type: USER_POLL_UPDATE_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   };
 }
@@ -89,8 +89,8 @@ export function userPollCreateFailture(error){
   return {
     type: USER_POLL_CREATE_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   };
 }
@@ -187,8 +187,8 @@ export function userPollDeleteFailture(error){
   return {
     type: USER_POLL_UPDATE_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   };
 }

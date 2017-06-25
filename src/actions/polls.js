@@ -26,8 +26,8 @@ export function pollsDataFailture(error){
   return {
     type: POLLS_DATA_FAILTURE,
     payload: {
-      stats: error.response.status,
-      statusText: error.response.statusText
+      stats: error.status,
+      statusText: error.statusText
     }
   };
 }

@@ -29,8 +29,8 @@ export function voteFailture(error){
   return {
     type: VOTE_FAILTURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   };
 }

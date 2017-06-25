@@ -20,6 +20,7 @@ export function registerFailture(error){
   return {
     type: REGISTER_FAILTURE,
     payload: {
+        status: error.status,
         statusText: error.message
     }
   };
