@@ -39,6 +39,14 @@ export function getPolls(){
         method: 'GET'
       })
       .then( response => response.json())
-      .then( json => dispatch(pollsDataSuccess(json)));
+      .then( json => dispatch(pollsDataSuccess(json)))
+      .catch( err => {
+        const payload = {
+          status: "Connection error",
+          statusText: "Server is not responding. Please try again later"
+        };
+
+        dispatch(pollsDataFailture(payload));
+      })
   };
 }

@@ -30,10 +30,10 @@ export function pollDataSuccess(poll){
 
 export function pollDataFailture(error){
     return {
-        type: POLLS_DATA_FAILTURE,
+        type: POLL_DATA_FAILTURE,
         payload: {
-            status: error.response.status,
-            statusText: error.response.statusText
+            status: error.status,
+            statusText: error.statusText
         }
     };
 }
@@ -57,8 +57,8 @@ export function pollUpdateFailture(error) {
     return {
         type: POLL_UPDATE_FAILTURE,
         payload: {
-            status: error.response.status,
-            statusText: error.response.statusText
+            status: error.status,
+            statusText: error.statusText
         }
     };
 }
@@ -82,7 +82,15 @@ export function getPoll(pollId){
                 method: 'GET'
             })
             .then( response => response.json())
-            .then(json => dispatch(pollDataSuccess(json)));
+            .then(json => dispatch(pollDataSuccess(json)))
+            .catch( err => {
+                const payload = {
+                    status: "Connection error.",
+                    statusText: "Server is not responding. Please try again later."
+                }
+
+                dispatch(pollDataFailture(payload));
+            });
     };
 }
 
@@ -102,5 +110,13 @@ export function updatePoll(token, pollId, option){
         .then( response => response.json())
         .then( json => dispatch(pollUpdateSuccess(json)))
         .then( dispatch(pollAddOptionDisable()))
+        .catch( err => {
+            const payload = {
+                status: "Connection error.",
+                statusText: "Server is not responding. Please try again later."
+            };
+
+            dispatch(pollUpdateFailture(payload));
+        });
     };
 }

@@ -112,6 +112,14 @@ export function createPoll(token, data){
       .then( json => {
         dispatch(userPollCreateSuccess(json));
         browserHistory.push(`/poll/${json._id}`);
+      })
+      .catch(err => {
+        const payload = {
+          status: "Connection error",
+          statusText: "Server is not reasponding. Please try again later"
+        };
+
+        dispatch(userPollCreateFailture(payload));
       });
   };
 }
@@ -127,8 +135,15 @@ export function userPollsRequest(userId){
         }
       })
       .then( response => response.json())
-      .then( json =>{
-         dispatch(userPollsDataSuccess(json))});
+      .then( json => dispatch(userPollsDataSuccess(json)))
+      .catch( err => {
+        const payload = {
+          status: "Connection error.",
+          statusText: "Server is not responding. Please try again later."
+        }
+
+        dispatch(userPollsDataFailture(payload));
+      });
   }
 }
 
@@ -144,7 +159,15 @@ export function deletePoll(token, pollId){
         }
       })
       .then( response => response.json())
-      .then( json => dispatch(userPollDeleteSucces()));
+      .then( json => dispatch(userPollDeleteSucces()))
+      .catch( err => {
+        const payload = {
+          status: "Connection error.",
+          statusText: "Server is not responding. Please try again later."
+        }
+
+        dispatch(userPollDeleteFailture(payload));
+      });
   }
 }
 

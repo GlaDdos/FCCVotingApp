@@ -38,24 +38,25 @@ export function voteFailture(error){
 
 export function vote(pollId, optionId){
   return function (dispatch){
-    console.log('helou');
     dispatch(voteRequest());
-    console.log('/api/polls/' + pollId +'/' + optionId);
       return fetch('http://localhost:3000/api/poll/' + pollId +'/' + optionId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        },
-        body: {'ok': 'true'}
-      })
+        }})
       .then(response => response.json())
       .then(json => {
         dispatch(voteSuccess(json));
         return json;
       })
-      .then( 
-        json => {
-          dispatch(pollDataSuccess(json))});
+      .then( json => dispatch(pollDataSuccess(json)))
+      .catch( err => {
+        const payload = {
+          status: "Connection error",
+          statusText: "Server is not responding. Please try again later."
+        }
+        dispatch(voteFailture(payload));
+      });
   };
 }
