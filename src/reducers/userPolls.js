@@ -16,14 +16,15 @@ import {
 
   USER_POLL_DELETE_REQUEST,
   USER_POLL_DELETE_SUCCESS,
-  USER_POLL_DELETE_FAILTURE
+  USER_POLL_DELETE_FAILTURE,
+
+  DISMISS_ERROR
 
 } from '../const';
 
 const initialState = {
   isRequesting: false,
   isSuccess: false,
-  statusText: null,
   polls: [{
     owner: "",
     title: "",
@@ -32,7 +33,12 @@ const initialState = {
       votes: 0
     }],
     date: null
-  }]
+  }],
+  error: {
+    isError: false,
+    status: '',
+    statusText: ''
+  }
 };
 
 export default function (state = initialState, action){
@@ -41,7 +47,9 @@ export default function (state = initialState, action){
       return Object.assign({}, state, {
         isRequesting: true,
         isSuccess:false,
-        statusText: 'Getting polls...'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLLS_DATA_SUCCESS:
@@ -49,78 +57,118 @@ export default function (state = initialState, action){
         isRequesting: false,
         isSuccess: true,
         polls: action.payload.data,
-        statusText: 'Request successfull'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLLS_DATA_FAILTURE:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: false,
-        statusText: `Error while requesting data: ${action.payload.status} ${action.payload.statusText}`
+        error: {
+          isError: true,
+          state: `${action.payload.status}`,
+          statusText: `${action.payload.statusText}`
+        }
       });
 
     case USER_POLL_CREATE_REQUEST:
       return Object.assign({}, state, {
         isRequesting: true,
         isSuccess: false,
-        statusText: 'Creating poll...'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_CREATE_SUCCESS:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: true,
-        statusText: 'New poll created.'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_CREATE_FAILTURE:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: false,
-        statusText: `Error while creating poll: ${action.payload.status} ${action.payload.statusText}`
+        error: {
+          isError: true,
+          status: `${action.payload.status}`,
+          statusText: `${action.payload.statusText}`
+        }
       });
 
     case USER_POLL_UPDATE_REQUEST:
       return Object.assign({}, state, {
         isRequesting: true,
         isSuccess: false,
-        statusText: 'Updating poll...'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_UPDATE_SUCCESS:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: true,
-        statusText: 'Poll updated.'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_UPDATE_FAILTURE:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: false,
-        statusText: `Error while updating poll: ${action.payload.status} ${action.payload.statusText}`
+        error: {
+          isError: true,
+          status: `${action.payload.status}`,
+          statusText: `${action.payload.statusText}`
+        }
       });
 
     case USER_POLL_DELETE_REQUEST:
       return Object.assign({}, state, {
         isRequesting: true,
         isSuccess: false,
-        statusText: 'Deleting poll...'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_DELETE_SUCCESS:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: true,
-        statusText: 'Poll deleted.'
+        error: {
+          isError: false
+        }
       });
 
     case USER_POLL_DELETE_FAILTURE:
-    return Object.assign({}, state, {
-      isRequesting: false,
-      isSuccess: true,
-      statusText: `Error while deleting poll: ${action.payload.status} ${action.payload.statusText}`
-    });
+      return Object.assign({}, state, {
+        isRequesting: false,
+        isSuccess: true,
+        error: {
+          isError: true,
+          status: `${action.payload.status}`,
+          statusText: `${action.payload.statusText}`
+        }
+      });
+
+    case DISMISS_ERROR:
+      return Object.assign({}, state, {
+          error: {
+              isError: false,
+              status: '',
+              statusText: ''
+          }
+      });
+
 
     default:
       return state;

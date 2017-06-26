@@ -9,7 +9,9 @@ import {
     POLL_UPDATE_FAILTURE,
 
     POLL_ADD_OPTION_ENABLE,
-    POLL_ADD_OPTION_DISABLE
+    POLL_ADD_OPTION_DISABLE,
+
+    DISMISS_ERROR
 } from '../const';
 
 const initialState = {
@@ -18,9 +20,13 @@ const initialState = {
     updateSuccess: false,
     updateFailture: false,
     isSuccess: false,
-    statusText: null,
     addOption: false,
-    poll: null
+    poll: null,
+    error: {
+        isError: false,
+        status: "",
+        statusText: ""
+    }
 };
 
 export default function( state = initialState, action){
@@ -29,14 +35,20 @@ export default function( state = initialState, action){
             return Object.assign({}, state, {
                 isRequesting: true,
                 isSuccess: false,
-                statusText: null
+                statusText: null,
+                error: {
+                    isError: false
+                }
             });
 
         case POLL_DATA_SUCCESS:
             return Object.assign({}, state, {
                 isRequesting: false,
                 isSuccess: true,
-                poll: action.payload.poll
+                poll: action.payload.poll,
+                error: {
+                    isError: false
+                }
             });
 
         case POLL_DATA_FAILTURE:
@@ -44,7 +56,11 @@ export default function( state = initialState, action){
                 isRequesting: false,
                 isSuccess: false,
                 poll: null,
-                statusText: `Error while requesting data: ${action.payload.status} ${action.payload.statusText}`
+                error: {
+                    isError: true,
+                    status: `${action.payload.status}`,
+                    statusText: `${action.payload.statusText}`
+                }
             });
 
         case POLL_UPDATE_REQUEST:
@@ -65,7 +81,11 @@ export default function( state = initialState, action){
             return Object.assign({}, state, {
                 updateRequesting: false,
                 updateSuccess: false,
-                statusText: `Error while updating poll: ${action.payload.status} ${action.payload.statusText}`
+                error: {
+                    isError: true,
+                    status: `${action.payload.status}`,
+                    statusText: `${action.payload.statusText}`
+                }
             });
 
         case POLL_ADD_OPTION_ENABLE:
@@ -76,6 +96,15 @@ export default function( state = initialState, action){
         case POLL_ADD_OPTION_DISABLE:
             return Object.assign({}, state, {
                 addOption: false
+            });
+
+        case DISMISS_ERROR:
+            return Object.assign({}, state, {
+                error: {
+                    isError: false,
+                    status: '',
+                    statusText: ''
+                }
             });
 
         default: 

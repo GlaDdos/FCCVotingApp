@@ -53,7 +53,9 @@ module.exports = {
 
   //single poll add option
   POLL_ADD_OPTION_ENABLE: 'POLL_ADD_OPTION_ENABLE',
-  POLL_ADD_OPTION_DISABLE: 'POLL_ADD_OPTION_DISABLE'
+  POLL_ADD_OPTION_DISABLE: 'POLL_ADD_OPTION_DISABLE',
+
+  DISMISS_ERROR: 'DISMISS_ERROR'
 };
 
 //export default actionTypes;

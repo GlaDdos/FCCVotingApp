@@ -4,7 +4,9 @@ import fetch from 'isomorphic-fetch';
 import {
   POLLS_DATA_REQUEST,
   POLLS_DATA_SUCCESS,
-  POLLS_DATA_FAILTURE
+  POLLS_DATA_FAILTURE,
+
+  DISMISS_ERROR
 } from '../const';
 
 export function pollsDataRequest(){
@@ -30,6 +32,12 @@ export function pollsDataFailture(error){
       statusText: error.statusText
     }
   };
+}
+
+export function dismissError(){
+    return {
+        type: DISMISS_ERROR
+    };
 }
 
 export function getPolls(){

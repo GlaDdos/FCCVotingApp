@@ -17,7 +17,9 @@ import {
 
   USER_POLL_DELETE_REQUEST,
   USER_POLL_DELETE_SUCCESS,
-  USER_POLL_DELETE_FAILTURE
+  USER_POLL_DELETE_FAILTURE,
+
+  DISMISS_ERROR
 } from '../const';
 
 
@@ -191,4 +193,10 @@ export function userPollDeleteFailture(error){
       statusText: error.statusText
     }
   };
+}
+
+export function dismissError(){
+    return {
+        type: DISMISS_ERROR
+    };
 }

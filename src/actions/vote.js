@@ -5,7 +5,9 @@ import { browserHistory } from 'react-router';
 import {
   VOTE_REQUEST,
   VOTE_SUCCESS,
-  VOTE_FAILTURE
+  VOTE_FAILTURE,
+
+  DISMISS_ERROR
 } from '../const';
 
 import { pollDataSuccess } from './poll';
@@ -35,6 +37,11 @@ export function voteFailture(error){
   };
 }
 
+export function dismissError(){
+    return {
+        type: DISMISS_ERROR
+    };
+}
 
 export function vote(pollId, optionId){
   return function (dispatch){

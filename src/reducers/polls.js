@@ -1,13 +1,14 @@
 import {
   POLLS_DATA_REQUEST,
   POLLS_DATA_SUCCESS,
-  POLLS_DATA_FAILTURE
+  POLLS_DATA_FAILTURE,
+
+  DISMISS_ERROR
 } from '../const';
 
 const initialState = {
   isRequesting: false,
   isSuccess: false,
-  statusText: "",
   polls: [{
     owner: {
       profile: {
@@ -21,7 +22,12 @@ const initialState = {
       votes: 0
     }],
     date: null
-  }]
+  }],
+  error: {
+    isError: false,
+    status: '',
+    statusText: ''
+  }
 };
 
 export default function (state = initialState, action) {
@@ -30,7 +36,10 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         isRequesting: true,
         isSuccess: false,
-        statusText: "Requesting polls..."
+        error: {
+          isError: false
+        }
+
       });
 
     case POLLS_DATA_SUCCESS:
@@ -38,15 +47,31 @@ export default function (state = initialState, action) {
         isRequesting: false,
         isSuccess: true,
         polls: action.payload.data,
-        statusText: 'Request successfull'
+        error: {
+          isError: false
+        }
       });
 
     case POLLS_DATA_FAILTURE:
       return Object.assign({}, state, {
         isRequesting: false,
         isSuccess: false,
-        statusText: `Error while requesting data: ${action.payload.status} ${action.payload.statusText}`
+        error: {
+          isError: true,
+          status: `${action.payload.status}`,
+          statusText: `${action.payload.statusText}`
+        }
       });
+
+    case DISMISS_ERROR:
+      return Object.assign({}, state, {
+          error: {
+              isError: false,
+              status: '',
+              statusText: ''
+          }
+      });
+
 
     default:
       return state;

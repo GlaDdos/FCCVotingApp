@@ -10,7 +10,9 @@ import {
     POLL_UPDATE_FAILTURE,
 
     POLL_ADD_OPTION_ENABLE,
-    POLL_ADD_OPTION_DISABLE
+    POLL_ADD_OPTION_DISABLE,
+
+    DISMISS_ERROR
 } from '../const';
 
 export function pollDataRequest(){
@@ -60,6 +62,12 @@ export function pollUpdateFailture(error) {
             status: error.status,
             statusText: error.statusText
         }
+    };
+}
+
+export function dismissError(){
+    return {
+        type: DISMISS_ERROR
     };
 }
 
