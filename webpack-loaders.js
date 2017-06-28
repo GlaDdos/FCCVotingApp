@@ -24,7 +24,10 @@ exports.devServer = function(options) {
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.LoaderOptionsPlugin({
               debug: true
-            })
+            }),
+            new webpack.optimize.DedupePlugin(), //dedupe similar code 
+            new webpack.optimize.UglifyJsPlugin(), //minify everything
+            new webpack.optimize.AggressiveMergingPlugin()//Merge chunks 
         ]
     };
 }

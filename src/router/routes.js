@@ -10,6 +10,7 @@ import NewPoll from '../components/NewPoll/NewPool';
 import ListPolls from '../components/ListPolls/ListPolls';
 import UserPolls from '../components/UserPolls/UserPolls';
 import UserPoll from '../components/UserPoll/UserPoll';
+import Page404 from '../components/Utils/Page404';
 
 export default (
   <Router history={browserHistory}>
@@ -22,6 +23,7 @@ export default (
       <Route path="/poll/:id" component={Poll} />
       <Route path="/signin" component={SingnIn} />
       <Route path="/login" component={Login} />
+      <Route path="/*" component={Page404} />
     </Route>
   </Router>
 

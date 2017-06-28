@@ -1,6 +1,7 @@
 'use strict';
 
 import fetch from 'isomorphic-fetch';
+import { browserHistory } from 'react-router';
 import {
     POLL_DATA_REQUEST,
     POLL_DATA_SUCCESS,
@@ -89,15 +90,26 @@ export function getPoll(pollId){
             return fetch(`http://localhost:3000/api/poll/${pollId}`, {
                 method: 'GET'
             })
-            .then( response => response.json())
-            .then(json => dispatch(pollDataSuccess(json)))
+            .then( response => {
+                    if(response.status == '404'){
+                        return response.json().then( json => {throw new Error('404')});
+                    }
+                    else {
+                        return response.json()}
+                    }
+                )
+            .then( json => dispatch(pollDataSuccess(json)))
             .catch( err => {
-                const payload = {
-                    status: "Connection error.",
-                    statusText: "Server is not responding. Please try again later."
-                }
+                if(err.message == '404'){
+                    browserHistory.push('/404');
+                } else {
+                    const payload = {
+                        status: "Connection error.",
+                        statusText: "Server is not responding. Please try again later."
+                    }
 
-                dispatch(pollDataFailture(payload));
+                    dispatch(pollDataFailture(payload));
+                }
             });
     };
 }

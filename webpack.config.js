@@ -1,7 +1,7 @@
 "use strict";
 
 const merge = require('webpack-merge');
-
+const webpack = require('webpack');
 const PATHS = require('./webpack-paths');
 const loaders = require('./webpack-loaders');
 
@@ -31,7 +31,11 @@ switch(process.env.NODE_ENV) {
     case 'build':
         config = merge(
             common,
-            { devtool: 'source-map' } // SourceMaps on separate file
+            { devtool: 'source-map' },
+            {plugins: [ // Hot module
+                new webpack.optimize.DedupePlugin(), //dedupe similar code 
+                new webpack.optimize.UglifyJsPlugin(), //minify everything
+                new webpack.optimize.AggressiveMergingPlugin()]}//Merge chunks  // SourceMaps on separate file
          );
         break;
 

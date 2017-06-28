@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import { userPollsRequest, dismissError } from '../../actions/userPolls';
 import { deletePoll } from '../../actions/userPolls';
@@ -16,7 +16,12 @@ class UserPolls extends Component {
     }
 
     componentDidMount(){
-        this.props.userPollsRequest(this.props.id);
+        if(this.props.id){
+            this.props.userPollsRequest(this.props.id);
+        }
+        else {
+            browserHistory.push('/login');
+        }
     }
 
     render(){

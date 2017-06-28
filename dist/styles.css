@@ -159,6 +159,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', end
     border-color: transparent;
 }
 
+.centered h3,
 .panel-heading h3 {
   font-weight: 300;
   color: #fff;

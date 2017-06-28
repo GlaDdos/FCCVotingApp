@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { browserHistory } from 'react-router';
 
 import NewOption from './NewOption';
 
@@ -99,6 +100,11 @@ export class Poll extends React.Component {
           </div>
 
         </div>
+
+        <div className="row row-footer text-right">
+            <button className="btn btn-short" onClick={browserHistory.goBack}>Back</button>
+        </div>
+
       </div>
     </div>
     );}

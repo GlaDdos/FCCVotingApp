@@ -32,7 +32,7 @@ const List = (props) => {
         <div className="panel panel-info">
             <div className="panel-heading">
                 <div className="centered">
-                    <h4>{ props.listTitle }</h4>
+                    <h3>{ props.listTitle }</h3>
                 </div>
             </div>
 
