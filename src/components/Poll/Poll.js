@@ -5,10 +5,11 @@ import { Field, reduxForm } from 'redux-form';
 import NewOption from './NewOption';
 
 import { vote } from '../../actions/vote';
-import { getPoll, pollAddOptionEnable, pollAddOptionDisable } from '../../actions/poll';
+import { getPoll, pollAddOptionEnable, pollAddOptionDisable, dismissError } from '../../actions/poll';
 
 import Chart from '../Chart/Chart';
 import Loader from '../Utils/Loader';
+import Modal from '../Utils/Modal';
 
 
 const form = reduxForm({
@@ -33,14 +34,20 @@ export class Poll extends React.Component {
   }
 
   render(){
-    const { handleSubmit, pristine, submitting, poll, addOption, isAuthenticated, isRequesting, dataRequesting } = this.props;
+    const { handleSubmit, pristine, submitting, poll, addOption, isAuthenticated, isRequesting, dataRequesting, dataSuccess, isError } = this.props;
     const { pollAddOptionEnable } = this.props;
 
-    if(!this.props.dataSuccess){
-      return (
-          <Loader loading={dataRequesting} />
-      )
-    } else {
+    if(dataRequesting || !dataSuccess){
+
+      if(this.props.isError){
+        return(
+          <Modal header={this.props.status} body={this.props.statusText} onClick={this.props.dismissError} />
+        );
+      } else {
+        return (
+            <Loader loading={dataRequesting} />
+        );
+    }} else {
 
     return(
       <div className="container-fluid">
@@ -85,7 +92,6 @@ export class Poll extends React.Component {
               }
             </div>
 
-
           </div>
           
           <div className="col-md-6">
@@ -104,7 +110,8 @@ const mapDispatchToProps = (dispatch) => {
     vote: (id, voteId) => dispatch(vote(id, voteId)),
     getPoll: (pollId) => dispatch(getPoll(pollId)),
     pollAddOptionEnable: () => dispatch(pollAddOptionEnable()),
-    pollAddOptionDisable: () => dispatch(pollAddOptionDisable())
+    pollAddOptionDisable: () => dispatch(pollAddOptionDisable()),
+    dismissError: () => dispatch(dismissError())
   };
 };
 
@@ -119,7 +126,11 @@ const mapStateToProps = (state) => {
     addOption: state.poll.addOption,
     dataRequesting: state.poll.isRequesting,
     dataSuccess: state.poll.isSuccess,
-    poll: state.poll.poll
+    poll: state.poll.poll,
+
+    isError: state.poll.error.isError,
+    status: state.poll.error.status,
+    statusText: state.poll.error.statusText
 
   };
 };

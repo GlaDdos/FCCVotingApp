@@ -2,7 +2,9 @@ import React from 'react';
 
 import ListHeader from './ListHeader';
 import ListRow from './ListRow';
+
 import Loader from '../Utils/Loader';
+
 
 const List = (props) => {
     let body = null;
@@ -24,10 +26,7 @@ const List = (props) => {
                 ))
             }
             </tbody>
-    } else {
-        body = <Loader loading={props.isRequesting} />
     }
-
     return (
         <div className="container-fluid">
         <div className="panel panel-info">
@@ -40,6 +39,7 @@ const List = (props) => {
             <div className="panel-body">
                 <table className="table table-hover">
                     <ListHeader />
+                    {props.isRequesting && <Loader loading={props.isRequesting} />}
                     {body}
                 </table>
             </div>

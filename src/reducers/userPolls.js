@@ -68,7 +68,7 @@ export default function (state = initialState, action){
         isSuccess: false,
         error: {
           isError: true,
-          state: `${action.payload.status}`,
+          status: `${action.payload.status}`,
           statusText: `${action.payload.statusText}`
         }
       });
