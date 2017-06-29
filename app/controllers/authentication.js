@@ -1,7 +1,7 @@
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-import User from '../models/user';
+const User = require('../models/user').User;
 
 function setUserInfo(user) {
   return {
@@ -16,7 +16,7 @@ function generateToken(user) {
   return jwt.sign(user, 'super secret', { expiresIn: 10080 });
 }
 
-const register = (req, res, next) => {
+exports.register = (req, res, next) => {
   const email = req.body.email;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -59,16 +59,11 @@ const register = (req, res, next) => {
   });
 }
 
-const login = (req, res, next) => {
+exports.login = (req, res, next) => {
   let userInfo = setUserInfo(req.user);
 
   res.status(200).json({
     token: 'JWT ' + generateToken(userInfo),
     user: userInfo
   });
-}
-
-export {
-  register,
-  login
 }

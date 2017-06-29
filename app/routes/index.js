@@ -1,20 +1,22 @@
 'use strict';
 
-import { addPoll, addOption, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
-import { login, register } from '../controllers/authentication';
-import express from 'express';
-import passport from 'passport';
-import '../config/passport';
+const pollController = require('../controllers/pollController');
+const auth = require('../controllers/authentication');
+const express = require('express');
+const passport = require('passport');
+
+require( '../config/passport');
 
 const path = process.cwd();
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireLogin = passport.authenticate('local', { session: false });
 
-export default function (app) {
+exports.routes = function (app) {
   app.route('/api/polls')
     .get((req, res, next) => {
-      getPolls()
+      console.log('fuck this shit');
+      pollController.getPolls()
         .then( json => {
           res.json(json);
         })
@@ -23,7 +25,7 @@ export default function (app) {
 
   app.route('/api/polls/:userId')
     .get((req, res, next) => {
-      getUserPolls(req.params.userId)
+      pollController.getUserPolls(req.params.userId)
         .then( json => {
           res.json(json);
         })
@@ -32,7 +34,7 @@ export default function (app) {
 
   app.route('/api/poll')
     .post(requireAuth, (req, res, next) => {
-      addPoll(req.user._id, req.body.title, req.body.options)
+      pollController.addPoll(req.user._id, req.body.title, req.body.options)
         .then( json => {
           res.json(json);
         })
@@ -41,7 +43,7 @@ export default function (app) {
 
   app.route('/api/poll/:pollId')
     .get((req, res, next) => {
-      getPoll(req.params.pollId)
+      pollController.getPoll(req.params.pollId)
         .then(json => {
           res.json(json);
         })
@@ -49,7 +51,7 @@ export default function (app) {
     })
 
     .post(requireAuth, (req, res, next) => {
-      addOption(req.params.pollId, req.body.option)
+      pollController.addOption(req.params.pollId, req.body.option)
         .then(json => {
           res.json(json);
         })
@@ -57,7 +59,7 @@ export default function (app) {
     })
 
     .delete(requireAuth, (req, res, next) => {
-      deletePoll(req.user._id, req.params.pollId)
+      pollController.deletePoll(req.user._id, req.params.pollId)
         .then( () => {
           res.status('201').json({message: 'Poll successfully deleted!'});
         })
@@ -66,7 +68,7 @@ export default function (app) {
 
   app.route('/api/poll/:pollId/:optionId')
     .post((req, res, next) => {
-      votePoll(req.params.pollId, req.params.optionId)
+      pollController.votePoll(req.params.pollId, req.params.optionId)
         .then( json => {
           res.json(json);
         })
@@ -79,9 +81,9 @@ export default function (app) {
     });
     
   app.route('/auth/register')
-    .post(register);
+    .post(auth.register);
 
   app.route('/auth/login')
-    .post(requireLogin, login);
+    .post(requireLogin, auth.login);
 
 }

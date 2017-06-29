@@ -1,7 +1,7 @@
 'use strict';
 
-import mongoose from 'mongoose';
-import User from './user';
+const mongoose = require('mongoose');
+const User = require('./user');
 
 const Schema = mongoose.Schema;
 
@@ -49,6 +49,4 @@ Poll.statics.addOption = function(id, optionName, callback) {
 
 Poll.set('toObject', {virtuals: true});
 
-export default mongoose.model("Poll", Poll);
-
-//todo: needs validation so empty array is throwing error
+exports.Poll = mongoose.model("Poll", Poll);

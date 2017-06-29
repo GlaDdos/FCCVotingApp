@@ -1,5 +1,5 @@
 
-export default function errorHandler(err, req, res, next){
+exports.errorHandler = function (err, req, res, next){
 
     const payload = {
       name: err.name,

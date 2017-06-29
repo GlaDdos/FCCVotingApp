@@ -1,8 +1,9 @@
-import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import LocalStrategy from 'passport-local';
+const passport = require('passport');
+const Strategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local').Strategy;
 
-import User from '../models/user';
+const User = require('../models/user').User;
 
 const localOptions = { usernameField: 'email'};
 

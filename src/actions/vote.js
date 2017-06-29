@@ -46,7 +46,7 @@ export function dismissError(){
 export function vote(pollId, optionId){
   return function (dispatch){
     dispatch(voteRequest());
-      return fetch('http://localhost:3000/api/poll/' + pollId +'/' + optionId, {
+      return fetch('http://voting.gladdos.usermd.net/api/poll/' + pollId +'/' + optionId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

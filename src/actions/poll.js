@@ -87,7 +87,7 @@ export function pollAddOptionDisable(){
 export function getPoll(pollId){
     return function(dispatch) {
         dispatch(pollDataRequest());
-            return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+            return fetch(`http://voting.gladdos.usermd.net/api/poll/${pollId}`, {
                 method: 'GET'
             })
             .then( response => {
@@ -118,7 +118,7 @@ export function updatePoll(token, pollId, option){
     return function (dispatch) {
         dispatch(pollUpdateRequest());
         
-        return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+        return fetch(`http://voting.gladdos.usermd.net/api/poll/${pollId}`, {
             method: 'POST',
             headers: new Headers({
                 'Accept': 'application/json',

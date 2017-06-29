@@ -1,13 +1,14 @@
-const express = rquire('express');
+'use strict';
+
+const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const resolve = require( 'path').resolve;
 const mongoose = require('mongoose');
+const path = require('path');
 
-const routes = require( './app/routes/index');
-const errorHandler = require('./app/utils/errorHandler');
-
-dotenv.load();
+const routes = require( './app/routes/index').routes;
+const errorHandler = require('./app/utils/errorHandler').errorHandler;
 
 const app = express();
 
@@ -35,8 +36,14 @@ app.use((req, res, next) => {
   next();
 });
 
+
 routes(app);
 
+ app.use(express.static(path.join(__dirname, 'dist')));
+ app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+ });
+ 
 app.use(errorHandler);
 
 

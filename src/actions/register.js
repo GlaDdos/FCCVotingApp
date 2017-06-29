@@ -30,7 +30,7 @@ export function registerUser(user) {
   return function(dispatch) {
     dispatch(registerRequest());
 
-    return fetch('http://localhost:3000/auth/register', {
+    return fetch('http://voting.gladdos.usermd.net/auth/register', {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),

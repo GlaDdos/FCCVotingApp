@@ -37,7 +37,7 @@ export function loginUser(user){
   return function(dispatch) {
       dispatch(loginUserRequest());
 
-      return fetch('http://localhost:3000/auth/login', {
+      return fetch('http://voting.gladdos.usermd.net/auth/login', {
         headers: new Headers({
           'Content-Type': 'application/json'
         }),

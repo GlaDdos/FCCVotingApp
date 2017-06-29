@@ -43,7 +43,7 @@ export function dismissError(){
 export function getPolls(){
   return function (dispatch) {
     dispatch(pollsDataRequest());
-      return fetch('http://localhost:3000/api/polls', {
+      return fetch('http://voting.gladdos.usermd.net/api/polls', {
         method: 'GET'
       })
       .then( response => response.json())
