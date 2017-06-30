@@ -22,6 +22,8 @@ const List = (props) => {
                         id={poll._id}
                         token={props.token}
                         deletePoll={props.deletePoll}
+                        deleteRequest={props.deleteRequest}
+                        requestDelete={props.requestDelete}
                     />
                 ))
             }

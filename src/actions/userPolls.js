@@ -19,7 +19,9 @@ import {
   USER_POLL_DELETE_SUCCESS,
   USER_POLL_DELETE_FAILTURE,
 
-  DISMISS_ERROR
+  DISMISS_ERROR,
+  DELETE_REQUEST,
+  DISMISS_DELETE_REQUEST
 } from '../const';
 
 
@@ -162,7 +164,10 @@ export function deletePoll(token, pollId){
         }
       })
       .then( response => response.json())
-      .then( json => dispatch(userPollDeleteSucces()))
+      .then( json => {
+        dispatch(userPollDeleteSucces(pollId));
+        dispatch(dismissRequestDelete());
+      })
       .catch( err => {
         const payload = {
           status: "Connection error.",
@@ -180,9 +185,12 @@ export function userPollDeleteRequest(){
   };
 }
 
-export function userPollDeleteSucces(){
+export function userPollDeleteSucces(pollId){
   return {
-    type: USER_POLL_DELETE_SUCCESS
+    type: USER_POLL_DELETE_SUCCESS,
+    payload: {
+      id: pollId
+    }
   };
 }
 
@@ -200,4 +208,19 @@ export function dismissError(){
     return {
         type: DISMISS_ERROR
     };
+}
+
+export function requestDelete(id){
+  return {
+    type: DELETE_REQUEST,
+    payload: {
+      id: id
+    }
+  };
+}
+
+export function dismissRequestDelete(){
+  return {
+    type: DISMISS_DELETE_REQUEST
+  };
 }

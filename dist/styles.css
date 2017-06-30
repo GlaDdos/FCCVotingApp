@@ -275,6 +275,7 @@ button.btn {
   color: #fff;
   border-radius: 4px;
   text-shadow: none;
+  margin-right: 2px;
 }
 
 button.close {

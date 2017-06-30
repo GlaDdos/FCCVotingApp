@@ -70,7 +70,6 @@ class UserPoll extends React.Component {
         
         <div className="row row-footer text-right">
             <button className="btn btn-short" onClick={() => {browserHistory.push(`/poll/${poll._id}`)}}>Go to poll</button>
-            <button className="btn btn-short btn-red" onClick={() => this.props.deletePoll(token, poll._id )}>Delete poll</button>
             <button className="btn btn-short" onClick={browserHistory.goBack}>Back</button>
         </div>
 

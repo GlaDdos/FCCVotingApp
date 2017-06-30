@@ -18,7 +18,9 @@ import {
   USER_POLL_DELETE_SUCCESS,
   USER_POLL_DELETE_FAILTURE,
 
-  DISMISS_ERROR
+  DISMISS_ERROR,
+  DELETE_REQUEST,
+  DISMISS_DELETE_REQUEST
 
 } from '../const';
 
@@ -34,6 +36,8 @@ const initialState = {
     }],
     date: null
   }],
+  deleteRequest: false,
+  deleteId: null,
   error: {
     isError: false,
     status: '',
@@ -146,7 +150,8 @@ export default function (state = initialState, action){
         isSuccess: true,
         error: {
           isError: false
-        }
+        },
+        polls: state.polls.filter(item => item._id != action.payload.id)
       });
 
     case USER_POLL_DELETE_FAILTURE:
@@ -169,6 +174,17 @@ export default function (state = initialState, action){
           }
       });
 
+    case DELETE_REQUEST:
+      return Object.assign({}, state, {
+        deleteRequest: true,
+        deleteId: action.payload.id
+      });
+
+    case DISMISS_DELETE_REQUEST:
+      return Object.assign({}, state, {
+        deleteRequest: false,
+        deleteId: null
+      });
 
     default:
       return state;
