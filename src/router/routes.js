@@ -12,6 +12,8 @@ import UserPolls from '../components/UserPolls/UserPolls';
 import UserPoll from '../components/UserPoll/UserPoll';
 import Page404 from '../components/Utils/Page404';
 
+import Authtest from '../components/Utils/authtest';
+
 export default (
   <Router history={browserHistory}>
     <Route path="/" component={Layout} >
@@ -23,6 +25,7 @@ export default (
       <Route path="/poll/:id" component={Poll} />
       <Route path="/signin" component={SingnIn} />
       <Route path="/login" component={Login} />
+      <Route path="/login/social" component={Authtest} />
       <Route path="/*" component={Page404} />
     </Route>
   </Router>

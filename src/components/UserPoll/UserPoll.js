@@ -8,9 +8,6 @@ import { deletePoll } from '../../actions/userPolls';
 import Chart from '../Chart/Chart'
 import Loader from '../Utils/Loader';
 
-//ISSUE: deletePoll() atm will not invoke refresh on userPoll store(?), breaking front end view till refresh happens
-//TODO: try manually delete poll from the store in the reducer
-
 class UserPoll extends React.Component {
     constructor(props){
         super(props);
@@ -68,6 +65,12 @@ class UserPoll extends React.Component {
 
         </div>
         
+        <div className="row voteShare">
+            <h3>Share this poll:</h3>
+            <button className="btn btn-link-2 share-twitter" onClick={() => window.open('https://twitter.com/intent/tweet?text=please update link in production <3')}> <span className="fa fa-twitter share-base"></span></button>
+            <button className="btn btn-link-2 share-google-plus" onClick={() => window.open('https://plus.google.com/share?url=this too please :)')}><span className="fa fa-google-plus share-base  spacing-left-5" ></span></button>
+        </div>            
+
         <div className="row row-footer text-right">
             <button className="btn btn-short" onClick={() => {browserHistory.push(`/poll/${poll._id}`)}}>Go to poll</button>
             <button className="btn btn-short" onClick={browserHistory.goBack}>Back</button>

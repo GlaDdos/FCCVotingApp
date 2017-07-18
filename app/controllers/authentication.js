@@ -6,9 +6,8 @@ import User from '../models/user';
 function setUserInfo(user) {
   return {
     _id: user.id,
-    firstName: user.profile.firstName,
-    lastName: user.profile.lastName,
-    email: user.email
+    firstName: user.firstName,
+    lastName: user.lastName,
   };
 }
 
@@ -41,16 +40,17 @@ const register = (req, res, next) => {
       return res.status(422).json({ error: 'This email adress is already in use.'});
     }
 
-    let user = new User({
-      email: email,
-      password: password,
-      profile: { firstName: firstName, lastName: lastName }
-    });
+    const newUser = new User();
+    
+      newUser.email = email;
+      newUser.password = newUser.hashPassword(password);
+      newUser.firstName = firstName;
+      newUser.lastName= lastName;
 
-    user.save((err, user) => {
+    newUser.save((err) => {
       if(err) return next(err);
 
-      let userInfo = setUserInfo(user);
+      let userInfo = setUserInfo(newUser);
       res.status(201).json({
         token: 'JWT ' + generateToken(userInfo),
         user: userInfo
@@ -68,7 +68,18 @@ const login = (req, res, next) => {
   });
 }
 
+const loginOAuth = (req, res,  next) => {
+  if(req.isAuthenticated()){
+    return next();
+  } else {
+    res.status(404).json({ok: 'not authenticated'});
+
+  }
+}
+
+
 export {
   register,
-  login
+  login,
+  loginOAuth
 }

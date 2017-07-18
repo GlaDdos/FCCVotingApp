@@ -17,13 +17,13 @@ export function addPoll(userId, title, options) {
 export function getPolls() {
   return Poll
       .find({})
-      .populate('owner', 'profile');
+      .populate({ path: 'owner', select: ['firstName', 'lastName']});
 }
 
 export function getUserPolls(userId) {
   return Poll
       .find({owner: userId})
-      .populate('owner', 'profile')
+      .populate({ path: 'owner', select: ['firstName', 'lastName']})
       .catch( (err) => {
         throw  new NotFound('User not found');
       })
@@ -35,7 +35,7 @@ export function votePoll(pollId, optionId) {
         {_id: pollId, 'options._id': optionId},
         {$inc: { 'options.$.votes': 1}},
         {new: true})
-      .populate('owner', 'profile');
+      .populate({ path: 'owner', select: ['firstName', 'lastName']});
 }
 
 export function getPoll(pollId){
@@ -43,7 +43,7 @@ export function getPoll(pollId){
       .findOne({
         _id: pollId
       })
-      .populate('owner', 'profile')
+      .populate({ path: 'owner', select: ['firstName', 'lastName']})
       .then( poll => {
         if(!poll){
           throw new NotFound("Poll not found!");
@@ -76,5 +76,5 @@ export function deletePoll(userId, pollId) {
 export function addOption(pollId, option) {
   return Poll
     .addOption(pollId, option)
-    .populate('owner', 'profile');
+    .populate({ path: 'owner', select: ['firstName', 'lastName']});
 }

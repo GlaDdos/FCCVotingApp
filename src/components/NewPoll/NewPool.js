@@ -40,7 +40,7 @@ export class NewPoll extends React.Component {
     const { error, handleSubmit,  pristine, reset, submitting, isError, status, statusText } = this.props;
     return(
       <form onSubmit={handleSubmit(this.handleFormSubmit)}>
-        <div className="panel panel-info">
+        <div className="panel panel-info" style={{minWidth: '400px'}}>
           
           <div className="panel-heading">
             <div className="col-sm-10 col-md-8 col-lg-8 center-block" style={{marginTop: '30px'}}>

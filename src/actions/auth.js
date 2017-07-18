@@ -45,21 +45,52 @@ export function loginUser(user){
         body: JSON.stringify(user)
       })
       .then( response => {
-        if(!response.ok){
-          return response.json().then(json => { throw Error(json.error) })
+
+        if(response.status == '401'){
+           throw Error('Login failed. Wrong email or password.');
         }
         
         return response.json();
       })
-      //.then( response => response.json())
       .then( json => {
         cookie.save('token', json.token, { path: '/' });
         cookie.save('user', json.user, { path: '/' });
         dispatch(loginUserSuccess(json));
         browserHistory.push('/');
       })
-      .catch(error => {console.dir(error); dispatch(loginUserFailture(error))})
+      .catch(error => {dispatch(loginUserFailture(error))})
     }
+} 
+
+export function getToken(){
+  return function(dispatch) {
+    dispatch(loginUserRequest());
+
+    return fetch('http://localhost:3000/auth/social/login', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      method: 'GET',
+      credentials:'include'
+    })
+    .then( response => {
+      if(!response.ok){
+        return response.json().then(json => { throw Error("Login failed. Email already in use.") })
+      }
+      
+      return response.json();
+    })
+    .then( json => {
+      cookie.save('token', json.token, { path: '/' });
+      cookie.save('user', json.user, { path: '/' });
+      dispatch(loginUserSuccess(json));
+      browserHistory.push('/');
+    })
+    .catch(error => {
+      dispatch(loginUserFailture(error));
+      browserHistory.push('/login');
+    })
+  }
 }
 
 export function logout() {
@@ -67,7 +98,17 @@ export function logout() {
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/'});
 
-    dispatch(logoutUser());
-    browserHistory.push('/');
+    return fetch('http://localhost:3000/auth/logout', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      method: 'GET'
+    })
+    .then( response => response.json())
+    .then(json => {
+      dispatch(logoutUser());
+      browserHistory.push('/');
+    })
+    .catch(err => console.log(err) )
   };
 }

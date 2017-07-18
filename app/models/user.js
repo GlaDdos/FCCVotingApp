@@ -5,29 +5,39 @@ import crypto from 'crypto';
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  email: { type: String, lowercase: true, unique: true, required: true },
-  password: { type: String, required: true },
-  profile: {
-    firstName: { type: String },
-    lastName: { type: String }
+  email: { 
+    type: String, 
+    lowercase: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { email: { $type: 'string' }}
+    } 
+  }, 
+  password: { type: String },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  facebook: {
+    id: { type: String },
+    token: { type: String }
+  },
+  google: {
+    id: { type: String },
+    token: { type: String }
+  },
+  github: {
+    id: { type: String },
+    token: { type: String }
   }
 },
   { timestamps: true }
 );
 
-UserSchema.pre('save', function(next) {
-  const user = this;
+UserSchema.methods.hashPassword = function(password) {
   const SALT_FACTOR = 5;
 
-  if(!this.isModified('password')) return next();
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null);
 
-    bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
-        user.password = hash;
-        next();
-      });
-    });
-});
+};
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {

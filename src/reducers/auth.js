@@ -22,6 +22,7 @@ export default function (state = initialState, action){
       });
 
     case LOGIN_USER_SUCCESS:
+    console.log(action.payload.user);
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: true,
@@ -41,7 +42,7 @@ export default function (state = initialState, action){
         firstName: null,
         lastName: null,
         email: null,
-        errorMessage: `Authentication Error: ${action.payload.statusText}`
+        errorMessage: `${action.payload.statusText}`
       });
 
     case LOGOUT_USER:
@@ -52,7 +53,8 @@ export default function (state = initialState, action){
         firstName: null,
         lastName: null,
         email: null,
-        errorMessage: null
+        errorMessage: null,
+        userId: null
       });
 
     default:

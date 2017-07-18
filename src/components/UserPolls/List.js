@@ -16,7 +16,7 @@ const List = (props) => {
                 props.polls.map((poll, index) => (
                     <ListRow index={index} 
                         title={poll.title} 
-                        name={poll.owner.profile.firstName} 
+                        name={poll.owner.firstName} 
                         time={new Date(poll.date).toLocaleDateString()} 
                         votes={poll.votes}
                         id={poll._id}

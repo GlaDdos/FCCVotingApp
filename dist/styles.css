@@ -172,10 +172,6 @@ span.icon {
   color: #fb7171;
 }
 
-.form-container {
-  margin-top: 15vh;
-}
-
 .form-header {
     overflow: hidden;
     padding: 0 25px 15px 25px;
@@ -436,6 +432,7 @@ span.label {
   margin-top: 30px;
   margin-bottom: 30px;
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 div.warning {
@@ -443,7 +440,7 @@ div.warning {
   color: #fff;
   text-align: center;
   margin: 5px auto 0 auto;
-  width: 80%;
+  border-radius: 3px;
 }
 
 .loader {
@@ -576,6 +573,7 @@ div.warning {
   0% { width: 0; }
 }
 
+.voteShare,
 div.voteOption {
   margin-left: 0;
   margin-right: 0;
@@ -584,6 +582,11 @@ div.voteOption {
   padding-top: 10px;
 
   color: #fff;
+}
+
+.voteShare > h3 {
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .row-footer {
@@ -623,3 +626,54 @@ div.voteOption {
   height: 40px;
   line-height: 0;
 }
+
+.alert-danger {
+  color: #fff;
+  background-color: rgba(255, 39, 39, 0.3);
+  border-color: transparent;
+}
+
+button.share-google-plus { 
+  background:#DD4B39; 
+  color:white; 
+}
+
+button.share-google-plus:hover,
+button.share-google-plus:focus {
+  opacity: .5;
+  background:#DD4B39; 
+
+}
+
+.share-base { 
+  cursor:pointer; 
+  width:20px; 
+  }
+
+button.share-twitter { 
+  background:#55ACEE; 
+  color:white; 
+  
+  }
+
+  .input-addon {
+    background-color:rgb(222, 81, 81);
+    height: 50px;
+    margin-left: -17px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-top: 13px;
+    padding-left: 3%;
+    color: #000;
+  }
+
+  .input-addon:hover,
+  .input-addon:active {
+    color: #fff;
+  }
+
+  .close {
+    float: none;
+    text-shadow: none;
+    color: inherit;
+  }

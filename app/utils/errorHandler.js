@@ -13,7 +13,10 @@ export default function errorHandler(err, req, res, next){
     res.status('404').json(payload);
   } else if (payload.name == 'ValidationError') {
     res.status('422').json(payload);
+  } else if (payload.name == 'MongoError') {
+    res.status('422').json(payload);
   } else {
+    console.log(err);
     res.status('500').json(payload);
   }
 }

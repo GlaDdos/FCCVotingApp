@@ -1,7 +1,7 @@
 'use strict';
 
 import { addPoll, addOption, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
-import { login, register } from '../controllers/authentication';
+import { login, loginOAuth, register } from '../controllers/authentication';
 import express from 'express';
 import passport from 'passport';
 import '../config/passport';
@@ -10,6 +10,7 @@ const path = process.cwd();
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireLogin = passport.authenticate('local', { session: false });
+const reqFacebookAuth = passport.authenticate('facebook', {session: true, scope: 'email'})
 
 export default function (app) {
   app.route('/api/polls')
@@ -83,5 +84,42 @@ export default function (app) {
 
   app.route('/auth/login')
     .post(requireLogin, login);
+
+  app.route('/auth/logout')
+    .get((req, res, next) => {
+      req.logOut();
+      req.session.destroy();
+      res.status('200').json({message: 'Log out.'});
+    })
+
+  app.route('/auth/facebook')
+    .get(passport.authenticate('facebook', { sesstion: true, scope : 'email' }));
+
+  app.route('/auth/facebook/callback')
+    .get(passport.authenticate('facebook', {
+      failureRedirect: 'http://localhost:3001/login',
+      successRedirect: 'http://localhost:3001/login/social'
+    }));
+
+  app.route('/auth/google')
+    .get(passport.authenticate('google', {session: true,  scope: ['profile', 'email']}));
+
+  app.route('/auth/google/callback')
+    .get(passport.authenticate('google', {
+      failureRedirect: 'http://localhost:3001/login/',
+      successRedirect: 'http://localhost:3001/login/social'
+    }));
+
+  app.route('/auth/github')
+    .get(passport.authenticate('github', {session: true, scope: ['profile']}));
+
+  app.route('/auth/github/callback')
+    .get(passport.authenticate('github', {
+      failureRedirect: 'http://localhost:3001/login',
+      successRedirect: 'http://localhost:3001/login/social'
+    }));
+
+  app.route('/auth/social/login')
+    .get(loginOAuth, login);
 
 }

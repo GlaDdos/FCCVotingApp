@@ -55,7 +55,7 @@ export class Poll extends React.Component {
           <div className="panel panel-info">
             <div className="panel-heading">
               <div className="centered">
-                <h3>{this.props.poll.title} by {this.props.poll.owner.profile.firstName} {this.props.poll.owner.profile.lastName}</h3>
+                <h3>{this.props.poll.title} by {this.props.poll.owner.firstName} {this.props.poll.owner.lastName}</h3>
               </div>
             </div>
 
@@ -65,7 +65,7 @@ export class Poll extends React.Component {
               <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 {
                   poll.options.map((option, index) => (
-                      <label className="control control-radio">
+                      <label className="control control-radio" key={option._id}>
                         {option.name}
                         <Field
                           name='option'
@@ -100,7 +100,15 @@ export class Poll extends React.Component {
           </div>
 
         </div>
-
+          {
+            isAuthenticated && (
+              <div className="row voteShare">
+                  <h3>Share this poll:</h3>
+                  <button className="btn btn-link-2 share-twitter" onClick={() => window.open('https://twitter.com/intent/tweet?text=please update link in production <3')}> <span className="fa fa-twitter share-base"></span></button>
+                  <button className="btn btn-link-2 share-google-plus" onClick={() => window.open('https://plus.google.com/share?url=this too please :)')}><span className="fa fa-google-plus share-base  spacing-left-5" ></span></button>
+              </div>   
+            )
+          }
         <div className="row row-footer text-right">
             <button className="btn btn-short" onClick={browserHistory.goBack}>Back</button>
         </div>
