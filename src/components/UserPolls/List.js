@@ -38,12 +38,11 @@ const List = (props) => {
                 <div className="centered">
                     <h3>{ props.listTitle }</h3>
                 </div>
+                {props.isRequesting && <Loader loading={props.isRequesting} />}
             </div>
-
             <div className="panel-body">
                 <table className="table table-hover">
                     <ListHeader />
-                    {props.isRequesting && <Loader loading={props.isRequesting} />}
                     {body}
                 </table>
             </div>
