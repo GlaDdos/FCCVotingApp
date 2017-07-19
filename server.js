@@ -2,6 +2,7 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const morgan      = require('morgan');
 const resolve     = require('path').resolve;
+const path        = require('path');
 const mongoose    = require('mongoose');
 const passport    = require('passport');
 const session     = require('express-session');
@@ -23,7 +24,8 @@ const options = {
 };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect('mongodb://' + process.env.MONGO_USER + ':' + process.env.MONGO_PASSWORD + '@' + process.env.MONGO_URL);
+console.log('mongodb://' + process.env.MONGO_USER + ':' + process.env.MONGO_PASSWPRD + '@' + process.env.MONGO_URL)
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
@@ -39,6 +41,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
@@ -58,3 +61,4 @@ if (typeof(PhusionPassenger) !== 'undefined') {
 } else {
     app.listen(3000);
     console.log('API server is listening...');
+}

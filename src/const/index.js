@@ -61,7 +61,7 @@ module.exports = {
   DISMISS_DELETE_REQUEST: 'DISMISS_DELETE_REQUEST',
 
   //APP realted const
-  API_URL: 'http://localhost:3000'
+  API_URL: 'http://voting.gladdos.usermd.net'
 };
 
 

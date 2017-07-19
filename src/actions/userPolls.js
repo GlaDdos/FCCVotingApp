@@ -103,7 +103,7 @@ export function userPollCreateFailture(error){
 export function createPoll(token, data){
   return function (dispatch) {
     dispatch(userPollCreateRequest());
-      return fetch(API_UTL + '/api/poll', {
+      return fetch(API_URL + '/api/poll', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

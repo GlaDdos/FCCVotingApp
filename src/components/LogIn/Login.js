@@ -59,9 +59,9 @@ class Login extends Component{
                         <div className="form-footer">
                             <h3>...or login with:</h3>
                             <div className="social-login">
-                                <a className="btn btn-link-2" href="http://localhost:3000/auth/facebook"><i className="fa fa-facebook"/> Facebook</a>
-                                <a className="btn btn-link-2" href="http://localhost:3000/auth/github"><i className="fa fa-github"/> GitHub</a>
-                                <a className="btn btn-link-2" href="http://localhost:3000/auth/google"><i className="fa fa-google-plus"/> Google Plus</a>
+                                <a className="btn btn-link-2" href="http://voting.gladdos.usermd.net/auth/facebook"><i className="fa fa-facebook"/> Facebook</a>
+                                <a className="btn btn-link-2" href="http://voting.gladdos.usermd.net/auth/github"><i className="fa fa-github"/> GitHub</a>
+                                <a className="btn btn-link-2" href="http://voting.gladdos.usermd.net/auth/google"><i className="fa fa-google-plus"/> Google Plus</a>
                             </div>
                         </div>
                     </div>

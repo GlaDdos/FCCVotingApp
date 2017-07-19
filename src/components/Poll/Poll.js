@@ -104,8 +104,8 @@ export class Poll extends React.Component {
             isAuthenticated && (
               <div className="row voteShare">
                   <h3>Share this poll:</h3>
-                  <button className="btn btn-link-2 share-twitter" onClick={() => window.open('https://twitter.com/intent/tweet?text=please update link in production <3')}> <span className="fa fa-twitter share-base"></span></button>
-                  <button className="btn btn-link-2 share-google-plus" onClick={() => window.open('https://plus.google.com/share?url=this too please :)')}><span className="fa fa-google-plus share-base  spacing-left-5" ></span></button>
+                  <button className="btn btn-link-2 share-twitter" onClick={() => window.open('https://twitter.com/intent/tweet?text=http://voting.gladdos.usermd.net/api/poll/' + poll._id)}> <span className="fa fa-twitter share-base"></span></button>
+                  <button className="btn btn-link-2 share-google-plus" onClick={() => window.open('https://plus.google.com/share?url=http://voting.gladdos.usermd.net/api/poll/' + poll._id)}><span className="fa fa-google-plus share-base  spacing-left-5" ></span></button>
               </div>   
             )
           }
