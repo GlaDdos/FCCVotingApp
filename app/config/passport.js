@@ -1,12 +1,12 @@
-import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import LocalStrategy from 'passport-local';
-import FacebookStrategy from 'passport-facebook';
-import GithubStrategy from 'passport-github';
-import { OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth';
-
-import auth from '../config/auth';
-import User from '../models/user';
+const passport         = require('passport');
+const Strategy         = require('passport-jwt').Strategy;
+const ExtractJwt       = require('passport-jwt').ExtractJwt;
+const LocalStrategy    = require('passport-local');
+const FacebookStrategy = require('passport-facebook');
+const GithubStrategy   = require('passport-github');
+const GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
+const auth             = require('../config/auth').auth; //here might be some troiubles
+const User             = require('../models/user').User;
 
 const localOptions = { usernameField: 'email'};
 
@@ -124,11 +124,9 @@ const googleLogin = new GoogleStrategy({
         if(err) return done(err);
 
         if(user){
-            console.log('in user');
             return done(null, user)
 
           } else {
-            console.log('in else');
             const newUser = new User();
 
             newUser.google.id = profile.id;
@@ -139,10 +137,8 @@ const googleLogin = new GoogleStrategy({
             newUser.email = profile.emails[0].value;
 
             newUser.save((err) => {
-              console.log('in save');
               if(err) return done(null, false);
 
-              console.log('returning new user ffs');
               return done(null, newUser);
             })
           }

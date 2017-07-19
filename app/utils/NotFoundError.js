@@ -11,4 +11,4 @@ NotFound.prototype.constructor = NotFound;
 
 const notFound = NotFound;
 
-export default notFound;
+exports.NotFound = notFound;

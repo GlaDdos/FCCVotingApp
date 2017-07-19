@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-export default {
+exports.auth = {
 
   'githubAuth': {
     'cliendID': process.env.GITHUB_CLIENTID,

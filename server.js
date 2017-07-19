@@ -1,17 +1,15 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import { resolve } from 'path';
-import mongoose from 'mongoose';
-import passport from 'passport';
-import session from 'express-session';
+const express     = require('express');
+const bodyParser  = require('body-parser');
+const morgan      = require('morgan');
+const resolve     = require('path').resolve;
+const mongoose    = require('mongoose');
+const passport    = require('passport');
+const session     = require('express-session');
 
-import routes from './app/routes/index';
-import errorHandler from './app/utils/errorHandler';
+const routes       = require('./app/routes/index').routes;
+const errorHandler = require('./app/utils/errorHandler').errorHandler;
 
 require('dotenv').config();
-
-
 
 const app = express();
 

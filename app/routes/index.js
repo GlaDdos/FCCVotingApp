@@ -1,21 +1,23 @@
 'use strict';
 
-import { addPoll, addOption, getPolls, getPoll, getUserPolls, votePoll, deletePoll } from '../controllers/pollController';
-import { login, loginOAuth, register } from '../controllers/authentication';
-import express from 'express';
-import passport from 'passport';
-import '../config/passport';
+const pollController =  require('../controllers/pollController');
+const auth = require('../controllers/authentication');
+const express = require('express');
+const passport = require('passport');
+
+require('dotenv').config();
+require ('../config/passport');
 
 const path = process.cwd();
 
 const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
+const requireLogin = passport.authenticate('local', { session: true });
 const reqFacebookAuth = passport.authenticate('facebook', {session: true, scope: 'email'})
 
-export default function (app) {
+exports.routes =  function (app) {
   app.route('/api/polls')
     .get((req, res, next) => {
-      getPolls()
+      pollController.getPolls()
         .then( json => {
           res.json(json);
         })
@@ -24,7 +26,7 @@ export default function (app) {
 
   app.route('/api/polls/:userId')
     .get((req, res, next) => {
-      getUserPolls(req.params.userId)
+      pollController.getUserPolls(req.params.userId)
         .then( json => {
           res.json(json);
         })
@@ -33,7 +35,7 @@ export default function (app) {
 
   app.route('/api/poll')
     .post(requireAuth, (req, res, next) => {
-      addPoll(req.user._id, req.body.title, req.body.options)
+      pollController.addPoll(req.user._id, req.body.title, req.body.options)
         .then( json => {
           res.json(json);
         })
@@ -42,7 +44,7 @@ export default function (app) {
 
   app.route('/api/poll/:pollId')
     .get((req, res, next) => {
-      getPoll(req.params.pollId)
+      pollController.getPoll(req.params.pollId)
         .then(json => {
           res.json(json);
         })
@@ -50,7 +52,7 @@ export default function (app) {
     })
 
     .post(requireAuth, (req, res, next) => {
-      addOption(req.params.pollId, req.body.option)
+      pollController.addOption(req.params.pollId, req.body.option)
         .then(json => {
           res.json(json);
         })
@@ -58,7 +60,7 @@ export default function (app) {
     })
 
     .delete(requireAuth, (req, res, next) => {
-      deletePoll(req.user._id, req.params.pollId)
+      pollController.deletePoll(req.user._id, req.params.pollId)
         .then( () => {
           res.status('201').json({message: 'Poll successfully deleted!'});
         })
@@ -67,7 +69,7 @@ export default function (app) {
 
   app.route('/api/poll/:pollId/:optionId')
     .post((req, res, next) => {
-      votePoll(req.params.pollId, req.params.optionId)
+      pollController.votePoll(req.params.pollId, req.params.optionId)
         .then( json => {
           res.json(json);
         })
@@ -80,10 +82,10 @@ export default function (app) {
     });
     
   app.route('/auth/register')
-    .post(register);
+    .post(auth.register);
 
   app.route('/auth/login')
-    .post(requireLogin, login);
+    .post(requireLogin, auth.login);
 
   app.route('/auth/logout')
     .get((req, res, next) => {
@@ -97,8 +99,8 @@ export default function (app) {
 
   app.route('/auth/facebook/callback')
     .get(passport.authenticate('facebook', {
-      failureRedirect: 'http://localhost:3001/login',
-      successRedirect: 'http://localhost:3001/login/social'
+      failureRedirect: process.env.APP_URL + '/login',
+      successRedirect: process.env.APP_URL + '/login/social'
     }));
 
   app.route('/auth/google')
@@ -106,8 +108,8 @@ export default function (app) {
 
   app.route('/auth/google/callback')
     .get(passport.authenticate('google', {
-      failureRedirect: 'http://localhost:3001/login/',
-      successRedirect: 'http://localhost:3001/login/social'
+      failureRedirect: process.env.APP_URL + '/login/',
+      successRedirect: process.env.APP_URL + '/login/social'
     }));
 
   app.route('/auth/github')
@@ -115,11 +117,11 @@ export default function (app) {
 
   app.route('/auth/github/callback')
     .get(passport.authenticate('github', {
-      failureRedirect: 'http://localhost:3001/login',
-      successRedirect: 'http://localhost:3001/login/social'
+      failureRedirect: process.env.APP_URL + '/login',
+      successRedirect: process.env.APP_URL + '/login/social'
     }));
 
   app.route('/auth/social/login')
-    .get(loginOAuth, login);
+    .get(auth.loginOAuth, auth.login);
 
 }
