@@ -11,6 +11,10 @@ const errorHandler = require('./app/utils/errorHandler').errorHandler;
 
 require('dotenv').config();
 
+if (typeof(PhusionPassenger) !== 'undefined') {
+    PhusionPassenger.configure({ autoInstall: false });
+}
+
 const app = express();
 
 const options = {
@@ -48,12 +52,9 @@ routes(app);
 
 app.use(errorHandler);
 
-app.listen(3000, function (err) {
-  if(err){
-    console.log('Express error..');
-    console.log(err);
-  }
-  else {
+if (typeof(PhusionPassenger) !== 'undefined') {
+    app.listen('passenger');
+    console.log('API server is listening... passenger');
+} else {
+    app.listen(3000);
     console.log('API server is listening...');
-  }
-});
