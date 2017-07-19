@@ -22,7 +22,6 @@ export default function (state = initialState, action){
       });
 
     case LOGIN_USER_SUCCESS:
-    console.log(action.payload.user);
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: true,

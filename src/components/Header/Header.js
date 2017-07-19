@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-//TODO https://www.hawatel.com/blog/handle-window-resize-in-react < 768px
 
 class Header extends React.Component {
   constructor(props){

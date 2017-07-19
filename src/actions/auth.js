@@ -109,6 +109,6 @@ export function logout() {
       dispatch(logoutUser());
       browserHistory.push('/');
     })
-    .catch(err => console.log(err) )
+    .catch(err => {return false;} )
   };
 }

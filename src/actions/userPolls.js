@@ -141,7 +141,6 @@ export function userPollsRequest(userId){
       .then( response => response.json())
       .then( json => dispatch(userPollsDataSuccess(json)))
       .catch( err => {
-        console.log(err);
         const payload = {
           status: "Connection error.",
           statusText: "Server is not responding. Please try again later."

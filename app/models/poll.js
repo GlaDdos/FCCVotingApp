@@ -6,7 +6,6 @@ const User = require('./user');
 const Schema = mongoose.Schema;
 
 function optionValidator(val){
-    console.log('validator');
     return val ? true : false;
 }
 

@@ -15,7 +15,6 @@ exports.errorHandler = function (err, req, res, next){
   } else if (payload.name == 'MongoError') {
     res.status('422').json(payload);
   } else {
-    console.log(err);
     res.status('500').json(payload);
   }
 }
