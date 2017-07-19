@@ -6,7 +6,7 @@
   "scripts": {
     "api": "babel-node server.js",
     "start": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=build webpack",
+    "build": "NODE_ENV=build webpack --progress --colors",
     "lint": "node_modules/.bin/esw webpack-config.* src app",
     "lint:watch": "npm run lint -- --watch"
   },
