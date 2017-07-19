@@ -14,7 +14,9 @@ const List = (props) => {
             <tbody>
             {
                 props.polls.map((poll, index) => (
-                    <ListRow index={index} 
+                    <ListRow 
+                        key={poll._id}
+                        index={index} 
                         title={poll.title} 
                         name={poll.owner.firstName} 
                         time={new Date(poll.date).toLocaleDateString()} 
