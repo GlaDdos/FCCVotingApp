@@ -7,7 +7,8 @@ import {
   VOTE_SUCCESS,
   VOTE_FAILTURE,
 
-  DISMISS_ERROR
+  DISMISS_ERROR,
+  API_URL
 } from '../const';
 
 import { pollDataSuccess } from './poll';
@@ -46,7 +47,7 @@ export function dismissError(){
 export function vote(pollId, optionId){
   return function (dispatch){
     dispatch(voteRequest());
-      return fetch('http://localhost:3000/api/poll/' + pollId +'/' + optionId, {
+      return fetch(API_URL + '/api/poll/' + pollId +'/' + optionId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

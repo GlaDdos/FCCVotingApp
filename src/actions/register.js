@@ -1,7 +1,7 @@
 'use strict';
 
 import fetch from 'isomorphic-fetch';
-import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILTURE } from '../const';
+import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILTURE, API_URL } from '../const';
 
 export function registerRequest(){
   return {
@@ -30,7 +30,7 @@ export function registerUser(user) {
   return function(dispatch) {
     dispatch(registerRequest());
 
-    return fetch('http://localhost:3000/auth/register', {
+    return fetch(API_URL + '/auth/register', {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),

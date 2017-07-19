@@ -21,7 +21,8 @@ import {
 
   DISMISS_ERROR,
   DELETE_REQUEST,
-  DISMISS_DELETE_REQUEST
+  DISMISS_DELETE_REQUEST,
+  API_URL
 } from '../const';
 
 
@@ -50,7 +51,6 @@ export function userPollsDataFailture(error){
   };
 }
 
-//user owned polls update
 export function userPollUpdateRequest(){
   return {
     type: USER_POLL_UPDATE_REQUEST
@@ -103,7 +103,7 @@ export function userPollCreateFailture(error){
 export function createPoll(token, data){
   return function (dispatch) {
     dispatch(userPollCreateRequest());
-      return fetch('http://localhost:3000/api/poll', {
+      return fetch(API_UTL + '/api/poll', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -131,7 +131,7 @@ export function createPoll(token, data){
 export function userPollsRequest(userId){
   return function(dispatch){
     dispatch(userPollsDataRequest());
-      return fetch(`http://localhost:3000/api/polls/${userId}`, {
+      return fetch( API_URL + `/api/polls/${userId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -155,7 +155,7 @@ export function userPollsRequest(userId){
 export function deletePoll(token, pollId){
   return function(dispatch){
     dispatch(userPollDeleteRequest());
-      return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+      return fetch( API_URL + `/api/poll/${pollId}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',

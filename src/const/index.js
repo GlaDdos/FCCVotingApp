@@ -58,7 +58,10 @@ module.exports = {
   DISMISS_ERROR: 'DISMISS_ERROR',
   
   DELETE_REQUEST: 'DELETE_REQUEST',
-  DISMISS_DELETE_REQUEST: 'DISMISS_DELETE_REQUEST'
+  DISMISS_DELETE_REQUEST: 'DISMISS_DELETE_REQUEST',
+
+  //APP realted const
+  API_URL: 'http://localhost:3000'
 };
 
-//export default actionTypes;
+

@@ -3,7 +3,7 @@
 import fetch from 'isomorphic-fetch';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
-import {  LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USER } from '../const';
+import {  LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILTURE, LOGOUT_USER, API_URL } from '../const';
 
 export function loginUserRequest(){
   return {
@@ -37,7 +37,7 @@ export function loginUser(user){
   return function(dispatch) {
       dispatch(loginUserRequest());
 
-      return fetch('http://localhost:3000/auth/login', {
+      return fetch( API_URL + '/auth/login', {
         headers: new Headers({
           'Content-Type': 'application/json'
         }),
@@ -66,7 +66,7 @@ export function getToken(){
   return function(dispatch) {
     dispatch(loginUserRequest());
 
-    return fetch('http://localhost:3000/auth/social/login', {
+    return fetch(API_URL + '/auth/social/login', {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
@@ -98,7 +98,7 @@ export function logout() {
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/'});
 
-    return fetch('http://localhost:3000/auth/logout', {
+    return fetch(API_URL + '/auth/logout', {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),

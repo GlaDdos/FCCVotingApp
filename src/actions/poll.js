@@ -13,7 +13,8 @@ import {
     POLL_ADD_OPTION_ENABLE,
     POLL_ADD_OPTION_DISABLE,
 
-    DISMISS_ERROR
+    DISMISS_ERROR,
+    API_URL
 } from '../const';
 
 export function pollDataRequest(){
@@ -87,7 +88,7 @@ export function pollAddOptionDisable(){
 export function getPoll(pollId){
     return function(dispatch) {
         dispatch(pollDataRequest());
-            return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+            return fetch(API_URL + `/api/poll/${pollId}`, {
                 method: 'GET'
             })
             .then( response => {
@@ -118,7 +119,7 @@ export function updatePoll(token, pollId, option){
     return function (dispatch) {
         dispatch(pollUpdateRequest());
         
-        return fetch(`http://localhost:3000/api/poll/${pollId}`, {
+        return fetch(API_URL + `/api/poll/${pollId}`, {
             method: 'POST',
             headers: new Headers({
                 'Accept': 'application/json',

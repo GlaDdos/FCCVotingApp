@@ -6,7 +6,8 @@ import {
   POLLS_DATA_SUCCESS,
   POLLS_DATA_FAILTURE,
 
-  DISMISS_ERROR
+  DISMISS_ERROR,
+  API_URL
 } from '../const';
 
 export function pollsDataRequest(){
@@ -43,7 +44,7 @@ export function dismissError(){
 export function getPolls(){
   return function (dispatch) {
     dispatch(pollsDataRequest());
-      return fetch('http://localhost:3000/api/polls', {
+      return fetch(API_URL + '/api/polls', {
         method: 'GET'
       })
       .then( response => response.json())
